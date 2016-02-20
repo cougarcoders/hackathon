@@ -8,7 +8,7 @@ migrate = Migrate(app,db)
 manager.add_command('db', MigrateCommand)
 
 @manager.command
-def createdb():
+def initdb():
     if prompt_bool(
         "Create database"):
         db.create_all()
