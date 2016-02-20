@@ -9,6 +9,7 @@ class SignupForm(Form):
     username = StringField('Username', validators=[DataRequired(), Length(3,80), Regexp('^[A-Za-z0-9_]{3,}$', message = 'Usernames consist of numbers, letters, and underscores.')])
     email = StringField('Email', validators=[DataRequired(), Length(1,120), Email()])
     phone = IntegerField('Phone', validators=[Length(10)])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
     salt = StringField('Salt')
     delivery_method = StringField('Delivery Method')
