@@ -9,22 +9,10 @@
 			<h1>Sign Up</h1>
 			<form action="" method="post">
 				{{ form.hidden_tag() }}
-				<p>
-					<label for="username">User name:</label>
-					{{ form.username }}
-				</p>
-				<p>
-					<label for="email">Email:</label>
-					{{ form.email }}
-				</p>
-				<p>
-					<label for="password">Password:</label>
-					{{ form.password }}
-				</p>
-				<p>
-					<label for="password2">Confirm password:</label>
-					{{ form.password2 }}
-				</p>
+				{{ render_field(form.username) }}
+				{{ render_field(form.email) }}
+				{{ render_field(form.password) }}
+				{{ render_field(form.password2) }}
 				<p>
 					<button type="submit">Sign Up</button>
 				</p>
