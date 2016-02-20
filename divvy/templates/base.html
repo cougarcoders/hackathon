@@ -4,7 +4,8 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>{% block title %}{% endblock %} - divvy</title>
-		<link rel="stylesheet" href=""/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js"></script>
 		<script>
 			requirejs.config({
@@ -18,6 +19,18 @@
 		{% block head %}{% endblock %}
 	</head>
 	<body>
-		{% block body %}{% endblock %}
+		<div data-role="page">
+			<div data-role="header">
+				{% block header %}{% endblock %}
+			</div>
+			<div data-role="main" class="ui-content">
+				{% block content %}{% endblock %}
+			</div>
+			<div data-role="footer">
+				{% block footer %}
+					<h4>footer</h4>
+				{% endblock %}
+			</div>
+		</div>
 	</body>
 </html>
