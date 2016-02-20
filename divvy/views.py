@@ -13,13 +13,10 @@ def index():
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        try:
-            user = User(email=form.email.data, username=form.username.data, password=form.password.data, delivery_method="1")
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('index'))
-        except IntegrityError:
-            return render_template('signup.html', form=form, errors=('That username is already taken.',)), 400
+        user = User(email=form.email.data, username=form.username.data, password=form.password.data, delivery_method="1")
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('index'))
     return render_template('signup.html', form=form)
 
 @app.route('/login', methods=['GET'])
