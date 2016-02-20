@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
+from sqlalchemy.exc import IntegrityError
 from forms import SignupForm, LoginForm
 from models import User
 from divvy import app, db
@@ -12,10 +13,13 @@ def index():
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data, username=form.username.data, password=form.password.data, delivery_method="1")
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('index'))
+        try:
+            user = User(email=form.email.data, username=form.username.data, password=form.password.data, delivery_method="1")
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('index'))
+        except IntegrityError:
+            return render_template('signup.html', form=form, errors=('That username is already taken.',)), 400
     return render_template('signup.html', form=form)
 
 @app.route('/login', methods=['GET'])
