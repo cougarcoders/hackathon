@@ -1,0 +1,35 @@
+{# Signup form for divvy #}
+{% extends "base.html" %}
+{% block title %}sign up{% endblock %}
+{% block head %}<script>require(['signup']);</script>{% endblock %}
+{% block content %}
+	<div data-role="page">
+		{{ header(buttons=False) }}
+		<div data-role="content" class="ui-content">
+			<h1>Sign Up</h1>
+			<form action="" method="post">
+				{{ form.hidden_tag() }}
+				<p>
+					<label for="username">User name:</label>
+					{{ form.username }}
+				</p>
+				<p>
+					<label for="email">Email:</label>
+					{{ form.email }}
+				</p>
+				<p>
+					<label for="password">Password:</label>
+					{{ form.password }}
+				</p>
+				<p>
+					<label for="password2">Confirm password:</label>
+					{{ form.password2 }}
+				</p>
+				<p>
+					<button type="submit">Sign Up</button>
+				</p>
+			</form>
+		</div>
+		{{ footer() }}
+	</div>
+{% endblock %}
