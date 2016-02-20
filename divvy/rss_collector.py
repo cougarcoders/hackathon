@@ -23,7 +23,7 @@ class RSSContent(object):
 
 
 # Variables
-rssSourceFileName = "RSSSources.txt"
+rssSourceFileName = "rss_sources.txt"
 
 
 # Build new rss source list from RSSSources.txt
