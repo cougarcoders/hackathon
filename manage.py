@@ -1,6 +1,6 @@
 from divvy import app,db
 from flask.ext.script import Manager, prompt_bool
-from models import *
+from divvy.models import *
 from flask.ext.migrate import Migrate, MigrateCommand
 
 manager = Manager(app)
