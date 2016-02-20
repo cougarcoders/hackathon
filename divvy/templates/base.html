@@ -2,11 +2,11 @@
 {% macro header(title='divvy', buttons=True) -%}
 	<div data-role="header">
 		{% if buttons %}
-			<a href="#" data-role="button" class="ui-btn-left">Menu</a>
+			<a href="#" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-left">Menu</a>
 		{% endif %}
 		<h1>{{ title }}</h1>
 		{% if buttons %}
-			<a href="#" data-role="button" class="ui-btn-right">Profile</a>
+			<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Settings</a>
 		{% endif %}
 	</div>
 {%- endmacro %}
@@ -22,6 +22,7 @@
 		<title>{% block title %}{% endblock %} - divvy</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+		<link rel="stylesheet" href="/static/css/style.css"/>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js"></script>
 		<script>
 			requirejs.config({
