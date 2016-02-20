@@ -6,3 +6,8 @@ html {
 .ui-page {
 	position: relative !important;
 }
+
+.error {
+	font-weight: bold;
+	color: Red;
+}
