@@ -10,6 +10,17 @@ class User(db.Model):
     salt = db.Column(db.String(20))
     delivery_method = db.Column(db.Integer, db.ForeignKey('delivery.id'), nullable=False)
     
+    @property
+    def password(self):
+        raise AttributeError('password: write-only field')
+        
+    @password.setter 
+    def password(self, password):
+        self.password = generate_passwword_hash(password+salt)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password+salt, password)
+    
     def __repr__(self):
         return '<User %r>' % self.username
         
