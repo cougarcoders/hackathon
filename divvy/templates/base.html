@@ -1,12 +1,18 @@
 {# Base template for divvy #}
-{% macro header(title='divvy') -%}
+{% macro header(title='divvy', buttons=True) -%}
 	<div data-role="header">
-		<h1>{{ title }}</h4>
+		{% if buttons %}
+			<a href="#" data-role="button" class="ui-btn-left">Menu</a>
+		{% endif %}
+		<h1>{{ title }}</h1>
+		{% if buttons %}
+			<a href="#" data-role="button" class="ui-btn-right">Profile</a>
+		{% endif %}
 	</div>
 {%- endmacro %}
-{% macro footer(title='divvy') -%}
+{% macro footer(title='&copy; 2016') -%}
 	<div data-role="footer">
-		<h4>{{ title }}</h4>
+		<h4>{{ title|safe }}</h4>
 	</div>
 {%- endmacro %}
 <!doctype html>
