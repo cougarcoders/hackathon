@@ -1,0 +1,17 @@
+{# Base template for divvy #}
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>{% block title %}{% endblock %} - divvy</title>
+		<link rel="stylesheet" href=""/>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js"></script>
+		<script>
+			// @TODO require.js config
+		</script>
+		{% block head %}{% endblock %}
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+	</body>
+</html>
