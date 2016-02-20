@@ -1,0 +1,17 @@
+{# Main app for divvy #}
+{% extends "base.html" %}
+{% block title %}main{% endblock %}
+{% block head %}<script>require(['app']);</script>{% endblock %}
+{% block header %}
+	<h1>divvy</h1>
+{% endblock %}
+{% block content %}
+	<div data-role="page">
+		{{ header() }}
+		<div data-role="content" class="ui-content">
+			<h2>welcome to divvy!</h2>
+		</div>
+		{{ footer() }}
+	</div>
+{% endblock %}
+
