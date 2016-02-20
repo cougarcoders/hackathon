@@ -13,3 +13,9 @@ class SignupForm(Form):
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
     salt = StringField('Salt')
     delivery_method = StringField('Delivery Method')
+
+class LoginForm(Form):
+    username = StringField('Your username:', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Keep me loggin in')
+    submit = SubmitField('Log In')
