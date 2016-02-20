@@ -1,4 +1,14 @@
 {# Base template for divvy #}
+{% macro header(title='divvy') -%}
+	<div data-role="header">
+		<h1>{{ title }}</h4>
+	</div>
+{%- endmacro %}
+{% macro footer(title='divvy') -%}
+	<div data-role="footer">
+		<h4>{{ title }}</h4>
+	</div>
+{%- endmacro %}
 <!doctype html>
 <html lang="en">
 	<head>
