@@ -13,24 +13,13 @@
 				"paths": {
 					"jquery": "//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min"
 					, "jquery-mobile": "//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min"
+					, "knockout": "//cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min"
 				}
 			});
 		</script>
 		{% block head %}{% endblock %}
 	</head>
 	<body>
-		<div data-role="page">
-			<div data-role="header">
-				{% block header %}{% endblock %}
-			</div>
-			<div data-role="main" class="ui-content">
-				{% block content %}{% endblock %}
-			</div>
-			<div data-role="footer">
-				{% block footer %}
-					<h4>footer</h4>
-				{% endblock %}
-			</div>
-		</div>
+		{% block content %}{% endblock %}
 	</body>
 </html>
