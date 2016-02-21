@@ -1,20 +1,17 @@
 {# Settings panel for divvy #}
 <div id="settings" data-role="panel" data-display="overlay" data-position="right">
 	<ul data-role="listview">
-		<li data-theme="b">
+		<li data-theme="b" data-role="divider">
 			<strong>Settings</strong>
 		</li>
-		<li>
-			<a href="#">Test</a>
+		<li data-icon="delete">
+			<a href="#" data-rel="close">Close</a>
 		</li>
-		<li>
-			<a href="#">Test</a>
+		<li data-icon="user">
+			<a id="settings-profile" href="#">Profile</a>
 		</li>
-		<li>
-			<a href="#">Test</a>
-		</li>
-		<li>
-			<a href="#">Test</a>
+		<li data-icon="power">
+			<a id="settings-logout" href="{{ url_for('logout') }}" data-ajax="false">Logout</a>
 		</li>
 	</ul>
 </div>
