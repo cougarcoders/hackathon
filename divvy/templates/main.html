@@ -6,10 +6,13 @@
 	<h1>divvy</h1>
 {% endblock %}
 {% block content %}
+	<!-- api endpoints -->
+		<input id="api-tags" type="hidden" value="{{ url_for('tags') }}"/>
+	<!-- /api endpoints -->
 	<div data-role="page">
+		{{ header() }}
 		{% include "parts/menu.html" %}
 		{% include "parts/settings.html" %}
-		{{ header() }}
 		<div data-role="content" class="ui-content">
 			<h2>welcome to divvy!</h2>
 		</div>

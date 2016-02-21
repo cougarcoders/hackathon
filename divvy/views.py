@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from forms import SignupForm, LoginForm, ProfileForm
 from models import User, Tag
 from divvy import app, db, login_manager
+import json
 
 @login_manager.user_loader
 def load_user(userid):
@@ -67,11 +68,12 @@ def profile():
         messages = ('Your profile has been updated.',)
     return render_template('profile.html', form=form, messages=messages)
 
-@app.context_processor
-def inject_tag():
-    return dict(all_tags=Tag.all)
-
 @app.route('/main', methods=['GET'])
 @login_required
 def main():
     return render_template('main.html')
+
+@app.route('/tags', methods=['GET'])
+@login_required
+def tags():
+    return json.dumps(Tag.all_dict())

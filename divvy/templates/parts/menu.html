@@ -9,13 +9,13 @@
 		</li>
 	</ul>
 	<ul data-role="listview" data-filter="true" data-filter-placeholder="Search for content...">
-		{% for t in all_tags() %}
-			<li data-role="list-divider" data-theme="a">{{ t.description }}</li>
-			{% for s in t.sources_object() %}
+		<!-- ko foreach: $data -->
+			<li data-role="list-divider" data-theme="a" data-bind="text: description">Loading...</li>
+			<!-- ko foreach: sources -->
 				<li data-icon="plus">
-					<a href="#">{{ s.description }}</a>
+					<a href="#" data-bind="text: description"></a>
 				</li>
-			{% endfor %}
-		{% endfor %}
+			<!-- /ko -->
+		<!-- /ko -->
 	</ul>
 </div>

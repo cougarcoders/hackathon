@@ -115,6 +115,10 @@ class Source(db.Model):
     def __repr__(self):
         return self.description
 
+    def as_dict(self):
+        return {'id': self.id,
+                'description': self.description}
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
@@ -122,6 +126,10 @@ class Tag(db.Model):
     @staticmethod
     def all():
         return Tag.query.all()
+
+    @staticmethod
+    def all_dict():
+        return [tag.as_dict() for tag in Tag.all()]
         
     # return all sources_id associated with this tag
     def sources(self):
@@ -141,6 +149,11 @@ class Tag(db.Model):
     
     def __repr__(self):
         return self.description
+
+    def as_dict(self):
+        return {'id': self.id,
+                'description': self.description,
+                'sources': [x.as_dict() for x in self.sources_object()]}
         
 class SourceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
