@@ -108,7 +108,7 @@ class Bucket(db.Model):
             return 'Source is already in bucket'
             
     # remove source fro bucket        
-    def remove_source(self, source_i):
+    def remove_source(self, source_id):
         check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id)
         if check_bucket_source is not None:
             db.session.delete(check_bucket_source)
@@ -116,6 +116,14 @@ class Bucket(db.Model):
             return 'Source deleted'
         else:
             return 'Source is not in bucket'
+        
+    # flush this bucket's queue contents
+    def flush_queue(self):
+        contents_to_delete = Queue_Contents.query.filter_by(queue_id = self.queue, bucket_id = self.id)
+        for queue_content in contents_to_delete:
+            db.session.delete(queue_content)
+        db.session.commit()
+        return 'Bucket queue flushed'
         
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
