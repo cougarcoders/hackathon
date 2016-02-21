@@ -17,22 +17,19 @@ div[data-role="panel"] form.ui-filterable {
 		display: none !important;
 	}
 
-	#content, #settings {
-		position: relative;
-		transform: none;
-		visibility: visible;
-		width: 17em;
+	.ui-panel {
+		position: relative !important;
+		transform: none !important;
+		visibility: visible !important;
+		width: 17em !important;
+		float: left !important;
 	}
 
-	#content {
-		float: left;
+	.ui-panel[data-position="right"] {
+		float: right !important;
 	}
-	
+
 	#content > .ui-panel-inner > ul > li:nth-child(2) {
 		display: none;
-	}
-
-	#settings {
-		float: right;
 	}
 }
