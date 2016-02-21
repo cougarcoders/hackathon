@@ -2,7 +2,7 @@
 {% macro header(title='divvy', buttons=True) -%}
 	<div data-role="header">
 		{% if buttons %}
-			<a href="#menu" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-left">Menu</a>
+			<a href="#content" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-left">Menu</a>
 		{% endif %}
 		<h1>{{ title }}</h1>
 		{% if buttons %}

@@ -11,3 +11,7 @@ html {
 	font-weight: bold;
 	color: Red;
 }
+
+div[data-role="panel"] form.ui-filterable {
+	padding-top: 1em;
+}
