@@ -20,6 +20,10 @@ div[data-role="panel"] form.ui-filterable {
     padding-top: 0.5em;
 }
 
+.ui-panel {
+    overflow-y: auto;
+}
+
 /* desktop styles */
 
 @media screen and (min-width: 1024px) {
@@ -35,7 +39,6 @@ div[data-role="panel"] form.ui-filterable {
         visibility: visible !important;
         width: 17em !important;
         float: left !important;
-        overflow-y: auto;
     }
 
     .ui-panel[data-position="right"] {

@@ -1,4 +1,7 @@
 {# Main app for divvy #}
+{% macro close_button(text='Close') -%}
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">{{ text }}</a>
+{%- endmacro %}
 {% extends "base.html" %}
 {% block title %}main{% endblock %}
 {% block content %}
@@ -10,7 +13,7 @@
         <!-- script for page -->
         <script>require(['main']);</script>
         <!-- tags/sources panel -->
-        <div id="content" data-role="panel" data-display="overlay">
+        <div id="content" data-role="panel" data-display="overlay" data-position-fixed="true">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
                     <strong>Content</strong>
@@ -25,7 +28,7 @@
                         <h1 data-bind="text: description"></h1>
                         <ul data-role="listview" data-theme="b" data-bind="foreach: sources">
                             <li>
-                                <a href="#" data-bind="text: description"></a>
+                                <a href="#add-to-bucket" data-rel="popup" data-bind="text: description"></a>
                             </li>
                         </ul>
                     </div>
@@ -67,6 +70,17 @@
                     <!-- /ko -->
                 </ul>
             </div>
+        <!-- popups -->
+        <div id="add-to-bucket" data-role="popup" class="ui-content" style="max-width:280px" data-dismissible="false">
+            {{ close_button() }}
+            <p>Which bucket would you like to add this source to?</p>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div>
         </div>
         {{ footer() }}
     </div>
