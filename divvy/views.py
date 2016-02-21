@@ -3,7 +3,11 @@ from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
 from forms import SignupForm, LoginForm
 from models import User
-from divvy import app, db
+from divvy import app, db, login_manager
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(int(userid))
 
 @app.route('/index')
 def index():
