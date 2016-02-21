@@ -4,7 +4,7 @@ define(['jquery', 'jquery-mobile'], function($, $m){
 	$(window).bind('resize', function(){
 		clearTimeout(t);
 		t = setTimeout(function(){
-			$('.ui-panel').css('min-height', $('.ui-page').height() + 'px');
+			$('.ui-panel').height($('.ui-page').height());
 		}, 10);
 	});
 
