@@ -23,13 +23,8 @@ def signup():
         return redirect(url_for('index'))
     return render_template('signup.html', form=form)
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = SignupForm()
-    return render_template('login.html', form=form)
-    
-@app.route('/login', methods=['POST'])
-def login_post():
     form = LoginForm()
     if form.validate_on_submit():
         user=User.get_by_username(form.username.data)
@@ -38,3 +33,8 @@ def login_post():
             return redirect(url_for('index'))
         # message for wrong password goes here
     return render_template('login.html', form=form)    
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    logout_user()
+    return render_template('logout.html')
