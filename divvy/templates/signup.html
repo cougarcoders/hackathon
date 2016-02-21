@@ -2,30 +2,30 @@
 {% extends "base.html" %}
 {% block title %}sign up{% endblock %}
 {% block content %}
-	<div data-role="page" id="signup-page">
-		<script>require(['signup']);</script>
-		{{ header(buttons=False) }}
-		<div data-role="content" class="ui-content">
-			<h1>Sign Up</h1>
-			{% if errors %}
-				<ul class="error">
-					{% for error in errors %}
-						<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
-			<form action="" method="post" data-ajax="false">
-				{{ form.hidden_tag() }}
-				{{ render_field(form.username) }}
-				{{ render_field(form.email) }}
-				{{ render_field(form.password) }}
-				{{ render_field(form.password2) }}
-				<p>
-					<button type="submit" data-theme="b">Sign Up</button>
+    <div data-role="page" id="signup-page">
+        <script>require(['signup']);</script>
+        {{ header(buttons=False) }}
+        <div data-role="content" class="ui-content">
+            <h1>Sign Up</h1>
+            {% if errors %}
+                <ul class="error">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form action="" method="post" data-ajax="false">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.username) }}
+                {{ render_field(form.email) }}
+                {{ render_field(form.password) }}
+                {{ render_field(form.password2) }}
+                <p>
+                    <button type="submit" data-theme="b">Sign Up</button>
                     <a data-role="button" href="{{ url_for('index') }}">Cancel</a>
-				</p>
-			</form>
-		</div>
-		{{ footer() }}
-	</div>
+                </p>
+            </form>
+        </div>
+        {{ footer() }}
+    </div>
 {% endblock %}
