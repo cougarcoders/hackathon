@@ -4,12 +4,11 @@ define(['jquery', 'jquery-mobile'], function($, $m){
 	$(window).bind('resize', function(){
 		clearTimeout(t);
 		t = setTimeout(function(){
-			$(document).trigger('updatelayout');
 			$('.ui-panel').height($('.ui-page').height());
-		}, 100);
+		}, 10);
 	});
 
-	$(document).bind('pageshow', function(){
+	$(document).bind('pageshow updatelayout', function(){
 		$(window).trigger('resize');
 	});
 });
