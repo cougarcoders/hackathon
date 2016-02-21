@@ -79,6 +79,27 @@ class Bucket(db.Model):
             result.append(Source.query.get(source.source_id))
         return result
         
+    # add source to bucket    
+    def add_source(self, source_id):
+        check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id)
+        if check_bucket_source is None:
+            new_bucket_source = Bucket_Sources(bucket_id = self.id, source_id = source_id)
+            db.session.add(new_bucket_source)
+            db.session.commit()
+            return 'Source added to bucket'
+        else:
+            return 'Source is already in bucket'
+            
+    # remove source fro bucket        
+    def remove_source(self, source_i):
+        check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id)
+        if check_bucket_source is not None:
+            db.session.delete(check_bucket_source)
+            db.session.commit()
+            return 'Source deleted'
+        else:
+            return "Source is not in bucket'
+        
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(100))
