@@ -1,5 +1,7 @@
+/* sign-up for divvy */
 define(['global', 'jquery', 'jquery-mobile'], function(global, $, $m){
-	$(document).bind('pageinit pageshow', '#signup-page', function() {
+    // focus on the username field when the page is shown
+	$(document).bind('pageshow', '#signup-page', function() {
 		$('#username').focus();
 	});
 });

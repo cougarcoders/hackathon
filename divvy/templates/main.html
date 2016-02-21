@@ -1,4 +1,7 @@
 {# Main app for divvy #}
+{% macro close_button(text='Close') -%}
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">{{ text }}</a>
+{%- endmacro %}
 {% extends "base.html" %}
 {% block title %}main{% endblock %}
 {% block content %}
@@ -7,8 +10,10 @@
         <input id="api-buckets" type="hidden" value="{{ url_for('buckets') }}"/>
     <!-- /api endpoints -->
     <div data-role="page">
+        <!-- script for page -->
         <script>require(['main']);</script>
-        <div id="content" data-role="panel" data-display="overlay">
+        <!-- tags/sources panel -->
+        <div id="content" data-role="panel" data-display="overlay" data-position-fixed="true">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
                     <strong>Content</strong>
@@ -23,13 +28,14 @@
                         <h1 data-bind="text: description"></h1>
                         <ul data-role="listview" data-theme="b" data-bind="foreach: sources">
                             <li>
-                                <a href="#" data-bind="text: description"></a>
+                                <a href="#add-to-bucket" data-rel="popup" data-bind="text: description"></a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- menu -->
         <div id="settings" data-role="panel" data-display="overlay" data-position="right">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
@@ -47,6 +53,7 @@
             </ul>
         </div>
         {{ header() }}
+        <!-- page content -->
         <div data-role="content" class="ui-content">
             <h2>Buckets: {{ current_user.username }}</h2>
             <div id="buckets" data-bind="foreach: $data">
@@ -56,13 +63,24 @@
                         <a href="#">Settings</a>
                     </li>
                     <li data-role="list-divider">Contents</li>
-                    <!-- ko foreach: sources -->
+                    <!-- ko foreach: sources() -->
                         <li data-icon="minus">
                             <a href="#" data-bind="text: description">Loading</a>
                         </li>
                     <!-- /ko -->
                 </ul>
             </div>
+        <!-- popups -->
+        <div id="add-to-bucket" data-role="popup" class="ui-content" style="max-width:280px" data-dismissible="false">
+            {{ close_button() }}
+            <p>Which bucket would you like to add this source to?</p>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div>
         </div>
         {{ footer() }}
     </div>
