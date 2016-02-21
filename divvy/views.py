@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
 from forms import SignupForm, LoginForm
-from models import User
+from models import User, Tag
 from divvy import app, db, login_manager
 
 @login_manager.user_loader
@@ -43,6 +43,10 @@ def login():
 def logout():
     logout_user()
     return render_template('logout.html')
+
+@app.context_processor
+def inject_tag():
+    return dict(all_tags=Tag.all)
 
 @app.route('/main', methods=['GET'])
 @login_required
