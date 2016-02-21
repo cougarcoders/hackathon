@@ -7,6 +7,8 @@
 {% endblock %}
 {% block content %}
 	<div data-role="page">
+		{% include "parts/menu.html" %}
+		{% include "parts/settings.html" %}
 		{{ header() }}
 		<div data-role="content" class="ui-content">
 			<h2>welcome to divvy!</h2>

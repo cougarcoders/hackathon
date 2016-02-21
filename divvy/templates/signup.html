@@ -1,10 +1,10 @@
 {# Signup form for divvy #}
 {% extends "base.html" %}
 {% block title %}sign up{% endblock %}
-{% block head %}<script>require(['naked']);</script>{% endblock %}
+{% block head %}<script>require(['signup']);</script>{% endblock %}
 {% block content %}
 	<div data-role="page">
-		{{ header() }}
+		{{ header(buttons=False) }}
 		<div data-role="content" class="ui-content">
 			<h1>Sign Up</h1>
 			{% if errors %}
@@ -21,7 +21,7 @@
 				{{ render_field(form.password) }}
 				{{ render_field(form.password2) }}
 				<p>
-					<button type="submit">Sign Up</button>
+					<button type="submit" data-theme="b">Sign Up</button>
 				</p>
 			</form>
 		</div>
