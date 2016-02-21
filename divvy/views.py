@@ -42,7 +42,7 @@ def logout():
     logout_user()
     return render_template('logout.html')
 
-@login_required
 @app.route('/app', methods=['GET'])
+@login_required
 def app():
     return render_template('app.html')
