@@ -9,9 +9,11 @@ app = Flask(__name__)
 
 # configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'divvy.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['DEBUG'] = True
 app.secret_key = os.getenv('SECRET_KEY', 'changemeplease')
 db = SQLAlchemy(app)
+__all__ = ["db", "app"]
 
 #configure authentication
 login_manager = LoginManager()
