@@ -13,26 +13,26 @@ class User(db.Model, UserMixin):
     salt = db.Column(db.String(20))
     delivery_method = db.Column(db.Integer, db.ForeignKey('delivery.id'), nullable=False)
     Buckets = db.relationship('Bucket', backref='user', lazy='dynamic')
-    
+
     @property
     def password(self):
         raise AttributeError('password: write-only field')
-        
-    @password.setter 
+
+    @password.setter
     def password(self, pwd):
         chars=[]
         for i in range(20):
             chars.append(random.choice(self.username))
         self.salt = "".join(chars)
         self.password_hash = generate_password_hash(pwd+self.salt)
-    
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password+self.salt)
-    
+
     @staticmethod
     def get_by_username(username):
         return User.query.filter_by(username=username).first()
-    
+
     # add buckets for new User
     def add_bucket_new_user(self, num_bucket):
         for i in range (1, num_bucket+1):
@@ -43,22 +43,22 @@ class User(db.Model, UserMixin):
             db.session.add(new_bucket)
             db.session.flush()
         db.session.commit()
-        return 'Created {} buckets for user {}'.format(num_bucket, self) 
-    
+        return 'Created {} buckets for user {}'.format(num_bucket, self)
+
     def __repr__(self):
         return '<User %r>' % self.username
-        
+
 class Delivery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200),nullable=False)
-    
+
     @staticmethod
     def all():
         return Delivery.query.all()
 
     def __repr__(self):
         return self.description
-    
+
 class Bucket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
@@ -67,10 +67,18 @@ class Bucket(db.Model):
     max_item = db.Column(db.Integer)
     queue = db.Column(db.Integer, db.ForeignKey('queue.id'), nullable=True)
     delivery_method = db.Column(db.Integer, db.ForeignKey('delivery.id'), nullable=False)
-    
+
     def __repr__(self):
         return self.description
-        
+
+    @staticmethod
+    def all():
+        return Bucket.query.all()
+
+    @staticmethod
+    def all_dict():
+        return [bucket.as_dict() for bucket in Bucket.all()]
+
     # get all sources of a Bucket
     def sources(self):
         all_sources = Bucket_Sources.query.filter_by(bucket_id=self.id)
@@ -79,6 +87,15 @@ class Bucket(db.Model):
             result.append(Source.query.get(source.source_id))
         return result
         
+    def sources_object(self):
+        return [source.as_dict() for source in self.sources()]
+
+    def as_dict(self):
+        return {'id': self.id,
+                'description': self.description,
+                'schedule': self.schedule,
+                'sources': self.sources_object()}
+
     # add source to bucket    
     def add_source(self, source_id):
         check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id)
@@ -109,7 +126,7 @@ class Schedule(db.Model):
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_empty = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     # return all contents that are currently in this queue
     def contents(self):
         all_contents = Queue_Contents.query.filter_by(queue_id=self.id)
@@ -117,7 +134,7 @@ class Queue(db.Model):
         for content in all_contents:
             result.append(Content.query.get(content.content_id))
         return result
-        
+
     # empty the all the contents out of this queue
     def flush(self):
         all_contents = Queue_Contents.query.filter_by(queue_id=self.id)
@@ -126,7 +143,7 @@ class Queue(db.Model):
         db.session.commit()
         self.last_empty=datetime.utcnow
         return "Queue {} flushed".format(self.id)
-        
+
     # add content to queue, skip if content is already in the queue
     def add_content(self, content_id, bucket_id):
         existing_content = Queue_Contents.query.filter_by(queue_id=self.id, content_id=content_id).first()
@@ -141,7 +158,7 @@ class Queue(db.Model):
                 return "Content {} added to queue {} and ".format(content_id, self.id) + self.prune_queue(bucket_id)
             else:
                 return "Content {} added to queue {}".format(content_id, self.id)
-   
+
     # prune contents from queue
     def prune_queue(self, bucket_id):
         max_item = Bucket.query.get(bucket_id).max_item
@@ -159,13 +176,13 @@ class Queue(db.Model):
             db.session.delete(queue_content)
         db.session.commit()
         return "Queue {} pruned for bucket {}".format(self.id, bucket_id)
-    
+
 class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
     type = db.Column(db.Integer, nullable=False)
     last_polled = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     # get all exiting contents for this source
     def contents(self):
         all_contents = Content.query.filter_by(source=self.id)
@@ -173,7 +190,7 @@ class Source(db.Model):
         for content in all_contents:
             result.append(Content.query.get(content.id))
         return result
-    
+
     def __repr__(self):
         return self.description
 
@@ -184,7 +201,7 @@ class Source(db.Model):
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
-    
+
     @staticmethod
     def all():
         return Tag.query.all()
@@ -192,7 +209,7 @@ class Tag(db.Model):
     @staticmethod
     def all_dict():
         return [tag.as_dict() for tag in Tag.all()]
-        
+
     # return all sources_id associated with this tag
     def sources(self):
         all_sources = Source_Tags.query.filter_by(tag_id=self.id)
@@ -200,7 +217,7 @@ class Tag(db.Model):
         for source in all_sources:
             result.append(source.source_id)
         return result
-        
+
     # return all source objects associated with this tag
     def sources_object(self):
         all_sources = Source_Tags.query.filter_by(tag_id=self.id)
@@ -208,7 +225,7 @@ class Tag(db.Model):
         for source in all_sources:
             result.append(Source.query.get(source.source_id))
         return result
-    
+
     def __repr__(self):
         return self.description
 
@@ -216,14 +233,14 @@ class Tag(db.Model):
         return {'id': self.id,
                 'description': self.description,
                 'sources': [x.as_dict() for x in self.sources_object()]}
-        
+
 class SourceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
-    
+
     def __repr__(self):
         return self.description
-        
+
 class Content(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), nullable=False)
@@ -231,19 +248,19 @@ class Content(db.Model):
     body = db.Column(db.Text, nullable=True)
     url= db.Column(db.Text, nullable=True)
     date_polled = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     def __repr__(self):
         return self.title
-        
+
 class SourceType_Reminder(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
     message = db.Column(db.Text, nullable=False)
-    
-    
+
+
 class SourceType_Bucket(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
     bucket = db.Column(db.Integer, db.ForeignKey('bucket.id', ondelete='cascade'))
-    
+
 class SourceType_RSS(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
     format = db.Column(db.Integer, nullable=False)
@@ -257,7 +274,7 @@ class Bucket_Sources(db.Model):
 class Source_Tags(db.Model):
     source_id = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id', ondelete='cascade'), primary_key=True)
-    
+
 class Queue_Contents(db.Model):
     queue_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='cascade'), primary_key=True)
     content_id = db.Column(db.Integer, db.ForeignKey('content.id', ondelete='cascade'), primary_key=True)

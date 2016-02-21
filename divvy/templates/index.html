@@ -2,14 +2,22 @@
 {% extends "base.html" %}
 {% block title %}home{% endblock %}
 {% block content %}
-	<div data-role="page">
-		<script>require(['naked']);</script>
-		{{ header(buttons=False) }}
-		<div data-role="content" class="ui-content">
-			<h2>welcome to divvy!</h2>
-			<a data-role="button" href="{{ url_for('login') }}" data-theme="b">Log In</a>
-			<a data-role="button" href="{{ url_for('signup') }}">Sign Up</a>
-		</div>
-		{{ footer() }}
-	</div>
+    <div data-role="page">
+        <script>require(['naked']);</script>
+        {{ header(buttons=False) }}
+        <div data-role="content" class="ui-content">
+            <h2>Welcome to divvy!</h2>
+            <p>Divvy is a productivity app for periodically providing you with updated content either via phone or email.</p>
+            <h3>Examples</h3>
+            <ul>
+                <li>Get the latest post from your favorite blog feed every 15 minutes</li>
+                <li>Send yourself a reminder to stretch your legs every hour</li>
+                <li>Receive a random Wikipedia entry every day</li>
+                <li>Laugh at a new joke every week</li>
+            </ul>
+            <a data-role="button" href="{{ url_for('login') }}" data-theme="b">Log In</a>
+            <a data-role="button" href="{{ url_for('signup') }}">Sign Up</a>
+        </div>
+        {{ footer() }}
+    </div>
 {% endblock %}
