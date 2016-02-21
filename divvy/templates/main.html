@@ -2,53 +2,78 @@
 {% extends "base.html" %}
 {% block title %}main{% endblock %}
 {% block content %}
-	<!-- api endpoints -->
-		<input id="api-tags" type="hidden" value="{{ url_for('tags') }}"/>
-	<!-- /api endpoints -->
-	<div data-role="page">
-		<script>require(['main']);</script>
-		<div id="content" data-role="panel" data-display="overlay">
-			<ul data-role="listview">
-				<li data-theme="b" data-role="list-divider">
-					<strong>Content</strong>
-				</li>
-				<li data-icon="delete">
-					<a href="#" data-rel="close">Close</a>
-				</li>
-			</ul>
-			<ul data-role="listview" data-filter="true" data-filter-placeholder="Search for content...">
-				<!-- ko foreach: $data -->
-					<li data-role="list-divider" data-theme="a" data-bind="text: description">Loading...</li>
-					<!-- ko foreach: sources -->
-						<li data-icon="plus">
-							<a href="#" data-bind="text: description"></a>
-						</li>
-					<!-- /ko -->
-				<!-- /ko -->
-			</ul>
-		</div>
-		<div id="settings" data-role="panel" data-display="overlay" data-position="right">
-			<ul data-role="listview">
-				<li data-theme="b" data-role="list-divider">
-					<strong>Settings</strong>
-				</li>
-				<li data-icon="delete">
-					<a href="#" data-rel="close">Close</a>
-				</li>
-				<li data-icon="user">
-					<a id="settings-profile" href="{{ url_for('profile') }}">Profile</a>
-				</li>
-				<li data-icon="power">
-					<a id="settings-logout" href="{{ url_for('logout') }}" data-ajax="false">Logout</a>
-				</li>
-			</ul>
-		</div>
-		{{ header() }}
-		<div data-role="content" class="ui-content">
-			<h2>Your Buckets</h2>
-			<a id="add-bucket" href="#" data-role="button" data-theme="b" data-icon="plus">Add Bucket</a>
-		</div>
-		{{ footer() }}
-	</div>
+    <!-- api endpoints -->
+        <input id="api-tags" type="hidden" value="{{ url_for('tags') }}"/>
+    <!-- /api endpoints -->
+    <div data-role="page">
+        <script>require(['main']);</script>
+        <div id="content" data-role="panel" data-display="overlay">
+            <ul data-role="listview">
+                <li data-theme="b" data-role="list-divider">
+                    <strong>Content</strong>
+                </li>
+                <li data-icon="delete">
+                    <a href="#" data-rel="close">Close</a>
+                </li>
+            </ul>
+            <ul data-role="listview" data-filter="true" data-filter-placeholder="Search for content...">
+                <!-- ko foreach: $data -->
+                    <li data-role="list-divider" data-theme="a" data-bind="text: description">Loading...</li>
+                    <!-- ko foreach: sources -->
+                        <li data-icon="plus">
+                            <a href="#" data-bind="text: description"></a>
+                        </li>
+                    <!-- /ko -->
+                <!-- /ko -->
+            </ul>
+        </div>
+        <div id="settings" data-role="panel" data-display="overlay" data-position="right">
+            <ul data-role="listview">
+                <li data-theme="b" data-role="list-divider">
+                    <strong>Settings</strong>
+                </li>
+                <li data-icon="delete">
+                    <a href="#" data-rel="close">Close</a>
+                </li>
+                <li data-icon="user">
+                    <a id="settings-profile" href="{{ url_for('profile') }}">Profile</a>
+                </li>
+                <li data-icon="power">
+                    <a id="settings-logout" href="{{ url_for('logout') }}" data-ajax="false">Logout</a>
+                </li>
+            </ul>
+        </div>
+        {{ header() }}
+        <div data-role="content" class="ui-content">
+            <h2>Your Buckets</h2>
+            <!-- ko foreach: $data -->
+                <ul data-role="listview" data-inset="true" class="bucket">
+                    <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
+                    <li data-icon="gear">
+                        <a href="#">Settings</a>
+                    </li>
+                    <li data-role="list-divider">Contents</li>
+                    <!-- ko foreach: sources -->
+                        <li data-icon="minus">
+                            <a href="#" data-text="description">Loading</a>
+                        </li>
+                    <!-- /ko -->
+                </ul>
+                <ul data-role="listview" data-inset="true" class="bucket">
+                    <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
+                    <li data-icon="gear">
+                        <a href="#">Settings</a>
+                    </li>
+                    <li data-role="list-divider">Contents</li>
+                    <!-- ko foreach: sources -->
+                        <li data-icon="minus">
+                            <a href="#" data-text="description">Loading</a>
+                        </li>
+                    <!-- /ko -->
+                </ul>
+            <!-- /ko -->
+        </div>
+        {{ footer() }}
+    </div>
 {% endblock %}
 
