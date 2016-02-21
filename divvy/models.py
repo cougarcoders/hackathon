@@ -40,7 +40,7 @@ class Delivery(db.Model):
     description = db.Column(db.String(200),nullable=False)
     
     def __repr__(self):
-        return self.id
+        return self.description
     
 class Bucket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +52,7 @@ class Bucket(db.Model):
     delivery_method = db.Column(db.Integer, db.ForeignKey('delivery.id'), nullable=False)
     
     def __repr__(self):
-        return self.id
+        return self.description
         
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,21 +65,32 @@ class Source(db.Model):
     last_polled = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
-        return self.id
+        return self.description
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
     
+    @staticmethod
+    def all():
+        return Tag.query.all()
+        
+    def sources(self):
+        all_sources = Source_Tags.query.filter_by(tag_id=self.id)
+        result = []
+        for source in all_sources:
+            result.append(source.source_id)
+        return result
+    
     def __repr__(self):
-        return self.id
+        return self.description
         
 class SourceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
     
     def __repr__(self):
-        return self.id
+        return self.description
         
 class Content(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -90,7 +101,7 @@ class Content(db.Model):
     date_polled = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
-        return self.id
+        return self.title
         
 class SourceType_Reminder(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
