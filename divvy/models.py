@@ -85,6 +85,7 @@ class Queue(db.Model):
         for content in all_contents:
             db.session.delete(content)
         db.session.commit()
+        self.last_empty=datetime.utcnow
         return "Queue {} flushed".format(self.id)
         
     # add content to queue, skip if content is already in the queue
@@ -208,6 +209,7 @@ class SourceType_RSS(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
     format = db.Column(db.Integer, nullable=False)
     url = db.Column(db.Text, nullable=False)
+    last_pubdate = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Bucket_Sources(db.Model):
     bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id', ondelete='cascade'), primary_key=True)
