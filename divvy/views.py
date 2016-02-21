@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
-from forms import SignupForm, LoginForm
+from forms import SignupForm, LoginForm, ProfileForm
 from models import User, Tag
 from divvy import app, db, login_manager
 
@@ -43,6 +43,23 @@ def login():
 def logout():
     logout_user()
     return render_template('logout.html')
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    messages = ()
+    form = ProfileForm()
+    if not form.email.data:
+        form.email.data = current_user.email
+    if form.validate_on_submit():
+        user = User.get_by_username(current_user.username)
+        if current_user.email != form.email.data:
+            user.email = form.email.data
+        if form.password.data:
+            user.password = form.password.data
+        db.session.commit()
+        messages = ('Your profile has been updated.',)
+    return render_template('profile.html', form=form, messages=messages)
 
 @app.context_processor
 def inject_tag():

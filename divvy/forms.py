@@ -1,4 +1,4 @@
-from flask_wtf import Form 
+from flask_wtf import Form
 from wtforms.fields import IntegerField, StringField, PasswordField, BooleanField, SubmitField
 from flask.ext.wtf.html5 import URLField
 from wtforms.validators import DataRequired, url, Length, Email, Regexp, EqualTo, ValidationError
@@ -10,18 +10,21 @@ class SignupForm(Form):
     email = StringField('Email', validators=[DataRequired(), Length(1,120), Email()])
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Sign Up')
-    
+
     def validate_email(self, email_field):
         if User.query.filter_by(email=email_field.data).first():
             raise ValidationError('There already is a user with this email address.')
-    
+
     def validate_username(self, username_field):
         if User.query.filter_by(username=username_field.data).first():
             raise ValidationError('This username is already taken.')
 
 class LoginForm(Form):
-    username = StringField('Your username:', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Keep me loggin in')
-    submit = SubmitField('Log In')
+    remember_me = BooleanField('Remember Me')
+
+class ProfileForm(Form):
+    email = StringField('Email', validators=[DataRequired(), Length(1,120), Email()])
+    password = PasswordField('Password', validators=[EqualTo('password2', message='Passwords must match.')])
+    password2 = PasswordField('Confirm Password')

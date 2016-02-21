@@ -1,15 +1,11 @@
-html {
-	margin: 0 auto;
-	max-width: 960px;
-}
-
-.ui-page {
-	position: relative !important;
-}
-
 .error {
 	font-weight: bold;
 	color: Red;
+}
+
+.info {
+	font-weight: bold;
+	color: Blue;
 }
 
 div[data-role="panel"] form.ui-filterable {

@@ -1,0 +1,67 @@
+{# User profile for divvy #}
+{% extends "base.html" %}
+{% block title %}profile{% endblock %}
+{% block head %}<script>require(['profile']);</script>{% endblock %}
+{% block content %}
+	<div data-role="page">
+		<div id="profile-menu" data-role="panel" data-display="overlay">
+			<ul data-role="listview">
+				<li data-role="list-divider" data-theme="b">Menu</li>
+				<li data-icon="delete">
+					<a href="#" data-rel="close">Close</a>
+				</li>
+				<li>
+					<a href="#">Test</a>
+				</li>
+				<li>
+					<a href="#">Test</a>
+				</li>
+				<li>
+					<a href="#">Test</a>
+				</li>
+			</ul>
+		</div>
+		<div id="settings" data-role="panel" data-display="overlay" data-position="right">
+			<ul data-role="listview">
+				<li data-role="list-divider" data-theme="b">Settings</li>
+				<li data-icon="delete">
+					<a href="#" data-rel="close">Close</a>
+				</li>
+				<li>
+					<a href="#">Test</a>
+				</li>
+				<li>
+					<a href="#">Test</a>
+				</li>
+				<li data-icon="power">
+					<a href="{{ url_for('logout') }}" data-ajax="false">Logout</a>
+				</li>
+			</ul>
+		</div>
+		<div data-role="header">
+			<a href="#profile-menu" data-iconpos="notext" data-icon="bars">Menu</a>
+			<h1>divvy</h1>
+			<a href="#settings" data-iconpos="notext" data-icon="gear" data-position="right">Settings</a>
+		</div>
+		<div data-role="content" class="ui-content">
+			<h2>Profile</h2>
+			{% if messages %}
+				<ul class="info">
+					{% for msg in messages %}
+						<li>{{ msg }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			<form action="" method="POST">
+				{{ form.hidden_tag() }}
+				{{ render_field(form.email) }}
+				{{ render_field(form.password) }}
+				{{ render_field(form.password2) }}
+				<p>
+					<button type="submit" data-theme="b">Update Profile</button>
+				</p>
+			</form>
+		</div>
+		{{ footer() }}
+	</div>
+{% endblock %}
