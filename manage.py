@@ -12,6 +12,7 @@ manager.add_command('runserver', server)
 
 @manager.command
 def initdb():
+    db.create_all()
     email_delivery = Delivery(description='Delivery by Email')
     phone_delivery = Delivery(description='Delivery by Phone')
     db.session.add(email_delivery)
