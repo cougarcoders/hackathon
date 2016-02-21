@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(20))
     salt = db.Column(db.String(20))
     delivery_method = db.Column(db.Integer, db.ForeignKey('delivery.id'), nullable=False)
+    Buckets = db.relationship('Bucket', backref='user', lazy='dynamic')
     
     @property
     def password(self):
@@ -58,15 +59,58 @@ class Bucket(db.Model):
     def __repr__(self):
         return self.description
         
+    # get all sources of a Bucket
+    def sources(self):
+        all_sources = Bucket_Sources.query.filter_by(bucket_id=self.id)
+        result = []
+        for source in all_sources:
+            result.append(Source.query.get(source.source_id))
+        return result
+        
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_empty = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # return all contents that are currently in this queue
+    def contents(self):
+        all_contents = Queue_Contents.query.filter_by(queue_id=self.id)
+        result = []
+        for content in all_contents:
+            result.append(Content.query.get(content.content_id))
+        return result
+        
+    # empty the all the contents out of this queue
+    def flush(self):
+        all_contents = Queue_Contents.query.filter_by(queue_id=self.id)
+        for content in all_contents:
+            db.session.delete(content)
+        db.session.commit()
+        return "Queue flushed"
+        
+    # add content to queue, skip if content is already in the queue
+    def add_content(self, content_id):
+        existing_content = Queue_Contents.query.filter_by(queue_id=self.id, content_id=content_id).first()
+        if existing_content is not None:
+            return "Content is already in the queue"
+        else:
+            queue_content = Queue_Contents(queue_id = self.id, content_id = content_id)
+            db.session.add(queue_content)
+            db.session.commit()
+            return "Content added"
     
 class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
     type = db.Column(db.Integer, nullable=False)
     last_polled = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # get all exiting contents for this source
+    def contents(self):
+        all_contents = Content.query.filter_by(source=self.id)
+        result = []
+        for content in all_contents:
+            result.append(Content.query.get(content.id))
+        return result
     
     def __repr__(self):
         return self.description
@@ -79,6 +123,7 @@ class Tag(db.Model):
     def all():
         return Tag.query.all()
         
+    # return all sources_id associated with this tag
     def sources(self):
         all_sources = Source_Tags.query.filter_by(tag_id=self.id)
         result = []
@@ -86,6 +131,7 @@ class Tag(db.Model):
             result.append(source.source_id)
         return result
         
+    # return all source objects associated with this tag
     def sources_object(self):
         all_sources = Source_Tags.query.filter_by(tag_id=self.id)
         result = []
