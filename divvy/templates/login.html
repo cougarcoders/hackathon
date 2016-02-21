@@ -3,7 +3,7 @@
 {% block title %}log in{% endblock %}
 {% block head %}<script>require(['login']);</script>{% endblock %}
 {% block content %}
-	<div data-role="page">
+	<div data-role="page" id="login-page">
 		{{ header(buttons=False) }}
 		<div data-role="content" class="ui-content">
 			<h1>Log In</h1>
@@ -23,6 +23,7 @@
 					<button type="submit" data-theme="b">Log In</button>
 				</p>
 			</form>
+			<p>Don't have an account? <a href="{{ url_for('signup') }}" data-ajax="false">Sign up</a> for one!</p>
 		</div>
 		{{ footer() }}
 	</div>

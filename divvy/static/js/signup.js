@@ -1,3 +1,8 @@
 define(['jquery', 'jquery-mobile'], function($, $m){
-	$('#username').focus();
+	$.mobile.loading('show');
+
+	$('[data-role="page"]').bind('pageshow', function(e) {
+		$.mobile.loading('hide');
+		$('#username').focus();
+	});
 });

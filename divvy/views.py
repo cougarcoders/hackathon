@@ -33,6 +33,7 @@ def login():
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
             return redirect(url_for('app'))
+        form.username.errors = ('Invalid credentials.',)
         # message for wrong password goes here
     return render_template('login.html', form=form)
 
