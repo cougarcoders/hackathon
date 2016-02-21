@@ -20,7 +20,7 @@ class RSSContent(object):
 
 
 # Variables
-rssSourceFileName = "rss_sources.txt"
+rssSourceFileName = "divvy/rss_sources.txt"
 
 
 # Build new rss source list from RSSSources.txt
@@ -42,14 +42,23 @@ def buildContentObjects():
         # foreach rss feed in feedURL - RSS feeds can have many articles from source
         feedData = feedparser.parse(feedURL)
         for rssFeed in feedData.entries:
+            #Check for null entries
             if len(rssFeed['title']) > 0:
                 rssContentObjectDict[indexer] = RSSContent(rssFeed['title'].encode("utf_8"),rssFeed['description'].encode("utf_8"),rssFeed['link'].encode("utf_8"),rssFeed['published'])
                 indexer += 1
     return  rssContentObjectDict
 
+# Insert RSSContent objects into database
+def insert_feeds_into_database():
+    feeds_dict = buildContentObjects()
+    for key,value in feeds_dict.items():
+        print("nothing here yet")
+        
+
+
 # DEBUG Tools
 def debugPrintContentObjects():
-    for dkey,value in buildContentObjects().items():
+    for key,value in buildContentObjects().items():
         print("***********************************")
         print("              NEW FEED             ")
         print("***********************************")
@@ -58,3 +67,4 @@ def debugPrintContentObjects():
         print("URL: " + value.url)
         print("Date: " + value.date)
         print("\n\n")
+
