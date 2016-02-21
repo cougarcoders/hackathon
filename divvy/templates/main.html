@@ -7,7 +7,9 @@
         <input id="api-buckets" type="hidden" value="{{ url_for('buckets') }}"/>
     <!-- /api endpoints -->
     <div data-role="page">
+        <!-- script for page -->
         <script>require(['main']);</script>
+        <!-- tags/sources panel -->
         <div id="content" data-role="panel" data-display="overlay">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
@@ -30,6 +32,7 @@
                 </div>
             </div>
         </div>
+        <!-- menu -->
         <div id="settings" data-role="panel" data-display="overlay" data-position="right">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
@@ -47,6 +50,7 @@
             </ul>
         </div>
         {{ header() }}
+        <!-- page content -->
         <div data-role="content" class="ui-content">
             <h2>Buckets: {{ current_user.username }}</h2>
             <div id="buckets" data-bind="foreach: $data">
@@ -56,7 +60,7 @@
                         <a href="#">Settings</a>
                     </li>
                     <li data-role="list-divider">Contents</li>
-                    <!-- ko foreach: sources -->
+                    <!-- ko foreach: sources() -->
                         <li data-icon="minus">
                             <a href="#" data-bind="text: description">Loading</a>
                         </li>

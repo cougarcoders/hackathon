@@ -1,3 +1,5 @@
+/* logout for divvy */
 define(['global', 'jquery', 'jquery-mobile'], function(global, $, $m){
-	setTimeout(function(){ $.mobile.navigate('/'); }, 7000);
+    // redirect to the homepage after a delay
+    setTimeout(function(){ $.mobile.navigate('/'); }, 7000);
 });
