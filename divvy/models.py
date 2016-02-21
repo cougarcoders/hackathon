@@ -76,8 +76,8 @@ class Bucket(db.Model):
         return Bucket.query.all()
 
     @staticmethod
-    def all_dict():
-        return [bucket.as_dict() for bucket in Bucket.all()]
+    def for_user_as_dict(id):
+        return [bucket.as_dict() for bucket in Bucket.query.filter_by(owner=id)]
 
     # get all sources of a Bucket
     def sources(self):
