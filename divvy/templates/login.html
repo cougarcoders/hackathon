@@ -21,6 +21,7 @@
 				{{ render_field(form.remember_me) }}
 				<p>
 					<button type="submit" data-theme="b">Log In</button>
+                    <a data-role="button" href="{{ url_for('index') }}">Cancel</a>
 				</p>
 			</form>
 			<p>Don't have an account? <a href="{{ url_for('signup') }}" data-ajax="false">Sign up</a> for one!</p>
