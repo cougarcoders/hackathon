@@ -85,18 +85,40 @@ class Queue(db.Model):
         for content in all_contents:
             db.session.delete(content)
         db.session.commit()
-        return "Queue flushed"
+        return "Queue {} flushed".format(self.id)
         
     # add content to queue, skip if content is already in the queue
-    def add_content(self, content_id):
+    def add_content(self, content_id, bucket_id):
         existing_content = Queue_Contents.query.filter_by(queue_id=self.id, content_id=content_id).first()
         if existing_content is not None:
-            return "Content is already in the queue"
+            return "Content {} is already in the queue".format(content_id)
         else:
-            queue_content = Queue_Contents(queue_id = self.id, content_id = content_id)
+            queue_content = Queue_Contents(queue_id = self.id, content_id = content_id, bucket_id = bucket_id)
             db.session.add(queue_content)
             db.session.commit()
-            return "Content added"
+            # query can be improved
+            if Queue_Contents.query.filter_by(queue_id = self.id, bucket_id = bucket_id).count() > Bucket.query.get(bucket_id).max_item:
+                return "Content {} added to queue {} and ".format(content_id, self.id) + self.prune_queue(bucket_id)
+            else:
+                return "Content {} added to queue {}".format(content_id, self.id)
+   
+    # prune contents from queue
+    def prune_queue(self, bucket_id):
+        max_item = Bucket.query.get(bucket_id).max_item
+        size_of_queue = Queue_Contents.query.filter_by(queue_id = self.id, bucket_id = bucket_id).count()
+        # this query returns a list of <Queue_Contnets, Content> records
+        query = db.session.query(Queue_Contents, Content)\
+            .filter(Queue_Contents.queue_id == self.id)\
+            .filter(Queue_Contents.content_id == Content.id)\
+            .filter(Queue_Contents.bucket_id == bucket_id)
+        Queue_Contents_Content_query_result = query.order_by(Content.date_polled).limit(size_of_queue - max_item).all()
+        queue_content_to_delete = []
+        for queue_content_content in Queue_Contents_Content_query_result:
+            queue_content_to_delete.append(queue_content_content[0])
+        for queue_content in queue_content_to_delete:
+            db.session.delete(queue_content)
+        db.session.commit()
+        return "Queue {} pruned for bucket {}".format(self.id, bucket_id)
     
 class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -198,3 +220,4 @@ class Source_Tags(db.Model):
 class Queue_Contents(db.Model):
     queue_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='cascade'), primary_key=True)
     content_id = db.Column(db.Integer, db.ForeignKey('content.id', ondelete='cascade'), primary_key=True)
+    bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id', ondelete='cascade'), primary_key=True)

@@ -37,7 +37,6 @@ def login():
             login_user(user, form.remember_me.data)
             return redirect(url_for('main'))
         form.username.errors = ('Invalid credentials.',)
-        # message for wrong password goes here
     return render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET'])
