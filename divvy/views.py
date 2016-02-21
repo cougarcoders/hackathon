@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
 from forms import SignupForm, LoginForm, ProfileForm
-from models import User, Tag
+from models import User, Tag, Bucket
 from divvy import app, db, login_manager
 import json
 
@@ -75,3 +75,12 @@ def main():
 @login_required
 def tags():
     return json.dumps(Tag.all_dict())
+
+@app.route('/buckets', methods=['GET'])
+@login_required
+def buckets():
+    return json.dumps(Bucket.all_dict())
+
+@app.route('/buckets', method=['POST'])
+def buckets_update():
+    pass

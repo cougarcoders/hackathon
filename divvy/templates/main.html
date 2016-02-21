@@ -4,6 +4,7 @@
 {% block content %}
     <!-- api endpoints -->
         <input id="api-tags" type="hidden" value="{{ url_for('tags') }}"/>
+        <input id="api-buckets" type="hidden" value="{{ url_for('buckets') }}"/>
     <!-- /api endpoints -->
     <div data-role="page">
         <script>require(['main']);</script>
