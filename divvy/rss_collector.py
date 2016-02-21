@@ -7,9 +7,6 @@
 
 
 import feedparser
-import time
-import schedule
-import RSSContent
 
 
 # RSS Feed Content Class
@@ -32,8 +29,7 @@ def readRSSSourceFile():
     # Open file as read only
     sourceFile = open(rssSourceFileName,"r")
     for line in sourceFile:
-        #print(line)    DEBUG ONLY
-        rssSourcesList.append(line)
+        rssSourceList.append(line)
     return rssSourceList
 
 # Fetch each feed from URL and construct dictionary of RSSContent objects
@@ -43,23 +39,22 @@ def buildContentObjects():
     # foreach URL in rssSourcesList fetch data
     indexer = 0 #Used as the key for dictionary
     for feedURL in rssSourcesList:
-        #print("Source URL = " + feedURL)
         # foreach rss feed in feedURL - RSS feeds can have many articles from source
         feedData = feedparser.parse(feedURL)
         for rssFeed in feedData.entries:
-            #print("RSS Feed: " + rssFeed['title'].encode("utf_8"))
             if len(rssFeed['title']) > 0:
                 rssContentObjectDict[indexer] = RSSContent(rssFeed['title'].encode("utf_8"),rssFeed['description'].encode("utf_8"),rssFeed['link'].encode("utf_8"),rssFeed['published'])
-                #print(rssContentObjectDict[indexer])
                 indexer += 1
-    #print("Objects Created: " + str(indexer))
     return  rssContentObjectDict
 
+# DEBUG Tools
 def debugPrintContentObjects():
     for dkey,value in buildContentObjects().items():
-        print(value.title)
-
-
-
-
-
+        print("***********************************")
+        print("              NEW FEED             ")
+        print("***********************************")
+        print("Title: " + value.title)
+        print("Body: " + value.body)
+        print("URL: " + value.url)
+        print("Date: " + value.date)
+        print("\n\n")
