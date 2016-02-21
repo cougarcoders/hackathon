@@ -16,16 +16,18 @@
                     <a href="#" data-rel="close">Close</a>
                 </li>
             </ul>
-            <ul data-role="listview" data-filter="true" data-filter-placeholder="Search for content...">
-                <!-- ko foreach: $data -->
-                    <li data-role="list-divider" data-theme="a" data-bind="text: description">Loading...</li>
-                    <!-- ko foreach: sources -->
-                        <li data-icon="plus">
-                            <a href="#" data-bind="text: description"></a>
-                        </li>
-                    <!-- /ko -->
-                <!-- /ko -->
-            </ul>
+            <div data-role="collapsible-set" data-inset="false">
+                <div data-role="listview" data-filter="true" data-bind="foreach: $data">
+                    <div data-role="collapsible">
+                        <h1 data-bind="text: description"></h1>
+                        <ul data-role="listview" data-theme="b" data-bind="foreach: sources">
+                            <li>
+                                <a href="#" data-bind="text: description"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="settings" data-role="panel" data-display="overlay" data-position="right">
             <ul data-role="listview">

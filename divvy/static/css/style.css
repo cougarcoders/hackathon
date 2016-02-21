@@ -17,7 +17,7 @@ html.ui-mobile {
 }
 
 div[data-role="panel"] form.ui-filterable {
-	padding-top: 1em;
+	padding-top: 0.5em;
 }
 
 /* desktop styles */
