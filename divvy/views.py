@@ -81,6 +81,6 @@ def tags():
 def buckets():
     return json.dumps(Bucket.all_dict())
 
-@app.route('/buckets', method=['POST'])
+@app.route('/buckets', methods=['POST'])
 def buckets_update():
     pass
