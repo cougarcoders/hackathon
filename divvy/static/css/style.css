@@ -11,3 +11,28 @@
 div[data-role="panel"] form.ui-filterable {
 	padding-top: 1em;
 }
+
+@media screen and (min-width: 960px) {
+	.ui-header > a {
+		display: none !important;
+	}
+
+	#content, #settings {
+		position: relative;
+		transform: none;
+		visibility: visible;
+		width: 17em;
+	}
+
+	#content {
+		float: left;
+	}
+	
+	#content > .ui-panel-inner > ul > li:nth-child(2) {
+		display: none;
+	}
+
+	#settings {
+		float: right;
+	}
+}

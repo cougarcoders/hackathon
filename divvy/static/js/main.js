@@ -1,11 +1,11 @@
-define(['jquery', 'jquery-mobile'], function($, $m){
-	$.mobile.loading('show');
+define(['jquery', 'jquery-mobile', 'knockout'], function($, $m, ko){
+	var tags_url = $('#api-tags').val();
 
 	$('#content').bind('panelopen', function(){
 		$('#content input[data-type="search"]').focus();
 	});
 
-	$('[data-role="page"]').bind('pageshow', function() {
-		$.mobile.loading('hide');
-	});
+	$.get(tags_url, null, function(data){
+		ko.applyBindings(data, $('#content')[0]);
+	}, 'json');
 });

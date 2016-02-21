@@ -1,6 +1,6 @@
 {# Base template for divvy #}
 {% macro header(title='divvy', buttons=True) -%}
-	<div data-role="header">
+	<div data-role="header" data-position="fixed">
 		{% if buttons %}
 			<a href="#content" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-left">Menu</a>
 		{% endif %}
@@ -11,7 +11,7 @@
 	</div>
 {%- endmacro %}
 {% macro footer(title='&copy; 2016') -%}
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed">
 		<h4>{{ title|safe }}</h4>
 	</div>
 {%- endmacro %}
