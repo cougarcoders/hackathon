@@ -48,7 +48,7 @@
         </div>
         {{ header() }}
         <div data-role="content" class="ui-content">
-            <h2>Your Buckets</h2>
+            <h2>Buckets: {{ current_user.username }}</h2>
             <div id="buckets" data-bind="foreach: $data">
                 <ul data-role="listview" data-inset="true" class="bucket">
                     <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
