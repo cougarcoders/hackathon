@@ -1,9 +1,14 @@
 {# User profile for divvy #}
 {% extends "base.html" %}
 {% block title %}profile{% endblock %}
-{% block head %}<script>require(['profile']);</script>{% endblock %}
 {% block content %}
 	<div data-role="page">
+		<script>require(['naked']);</script>
+		<div data-role="header">
+			<a style="display: none;"></a>
+			<h1>divvy</h1>
+			<a href="#settings" data-iconpos="notext" data-icon="gear" data-position="right">Settings</a>
+		</div>
 		<div id="settings" data-role="panel" data-display="overlay" data-position="right">
 			<ul data-role="listview">
 				<li data-role="list-divider" data-theme="b">Settings</li>
@@ -11,17 +16,12 @@
 					<a href="#" data-rel="close">Close</a>
 				</li>
 				<li data-icon="home">
-					<a href="{{ url_for('main') }}" data-ajax="false">Divvy Home</a>
+					<a href="{{ url_for('main') }}">Divvy Home</a>
 				</li>
 				<li data-icon="power">
 					<a href="{{ url_for('logout') }}" data-ajax="false">Logout</a>
 				</li>
 			</ul>
-		</div>
-		<div data-role="header">
-			<a style="display: none;"></a>
-			<h1>divvy</h1>
-			<a href="#settings" data-iconpos="notext" data-icon="gear" data-position="right">Settings</a>
 		</div>
 		<div data-role="content" class="ui-content">
 			<h2>Profile</h2>

@@ -1,9 +1,9 @@
 {# Homepage for divvy #}
 {% extends "base.html" %}
 {% block title %}home{% endblock %}
-{% block head %}<script>require(['naked']);</script>{% endblock %}
 {% block content %}
 	<div data-role="page">
+		<script>require(['naked']);</script>
 		{{ header(buttons=False) }}
 		<div data-role="content" class="ui-content">
 			<h2>welcome to divvy!</h2>

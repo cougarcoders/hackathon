@@ -1,1 +1,1 @@
-define(['jquery', 'jquery-mobile'], function($, $m){ /* nothing */ });
+define(['global', 'jquery', 'jquery-mobile'], function(global, $, $m){ /* nothing */ });
