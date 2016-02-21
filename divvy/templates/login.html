@@ -1,0 +1,27 @@
+{# Login form for divvy #}
+{% extends "base.html" %}
+{% block title %}log in{% endblock %}
+{% block head %}<script>require(['naked']);</script>{% endblock %}
+{% block content %}
+	<div data-role="page">
+		{{ header() }}
+		<div data-role="content" class="ui-content">
+			<h1>Log In</h1>
+			{% if errors %}
+				<ul class="error">
+					{% for error in errors %}
+						<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			<form action="" method="post" data-ajax="false">
+				{{ form.hidden_tag() }}
+				{{ render_field(form.username) }}
+				{{ render_field(form.password) }}
+				{{ render_field(form.remember_me) }}
+				{{ render_field(form.submit) }}
+			</form>
+		</div>
+		{{ footer() }}
+	</div>
+{% endblock %}
