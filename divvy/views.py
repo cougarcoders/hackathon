@@ -50,18 +50,16 @@ def logout():
 def profile():
     messages = ()
     form = ProfileForm()
-    if not form.email.data:
-        form.email.data = current_user.email
-        form.phone.data = current_user.phone
-        form.delivery_method.data = current_user.delivery_method
+    user = User.get_by_username(current_user.username)
+    if request.method == 'GET':
+        form.email.data = user.email
+        form.phone.data = user.phone
+        form.delivery_method.data = user.delivery_method
     if form.validate_on_submit():
-        user = User.get_by_username(current_user.username)
-        if current_user.email != form.email.data:
-            user.email = form.email.data
-        if current_user.phone != form.phone.data:
-            user.phone = form.phone.data
-        if current_user.delivery_method != form.delivery_method.data:
-            user.delivery_method = form.delivery_method.data
+        user = User.get_by_username(user.username)
+        user.email = form.email.data
+        user.phone = form.phone.data
+        user.delivery_method = form.delivery_method.data
         if form.password.data:
             user.password = form.password.data
         db.session.commit()

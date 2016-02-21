@@ -1,4 +1,5 @@
 from flask_wtf import Form
+from flask_login import current_user
 from wtforms.fields import IntegerField, StringField, PasswordField, BooleanField, SubmitField, SelectField
 from flask.ext.wtf.html5 import URLField
 from wtforms.validators import DataRequired, url, Length, Email, Regexp, EqualTo, ValidationError
@@ -26,7 +27,16 @@ class LoginForm(Form):
 
 class ProfileForm(Form):
     email = StringField('Email', validators=[DataRequired(), Length(1,120), Email()])
-    phone = StringField('Phone Number', validators=[Regexp('^[0-9]{10}$', message='Phone number must be 10 digits only.')])
+    phone = StringField('Phone Number', validators=[Regexp('^$|^[0-9]{10}$', message='Phone number must be 10 digits only.')])
     delivery_method = SelectField('Delivery Method', coerce=int, choices=[(x.id, x.description) for x in Delivery.all()])
     password = PasswordField('Password', validators=[EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm Password')
+
+    def validate(self):
+        Form.validate(self)
+        if (not self.phone.data
+                and self.delivery_method.data == Delivery.query.filter_by(description='Delivery by Phone').first().id):
+            self.delivery_method.errors = ('You must provide a phone number to use this method.',)
+            return False
+        return True
+
