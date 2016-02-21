@@ -39,6 +39,10 @@ class Delivery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200),nullable=False)
     
+    @staticmethod
+    def all():
+        return Delivery.query.all()
+
     def __repr__(self):
         return self.description
     

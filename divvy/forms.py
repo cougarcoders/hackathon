@@ -1,9 +1,9 @@
 from flask_wtf import Form
-from wtforms.fields import IntegerField, StringField, PasswordField, BooleanField, SubmitField
+from wtforms.fields import IntegerField, StringField, PasswordField, BooleanField, SubmitField, SelectField
 from flask.ext.wtf.html5 import URLField
 from wtforms.validators import DataRequired, url, Length, Email, Regexp, EqualTo, ValidationError
 
-from models import User
+from models import User, Delivery
 
 class SignupForm(Form):
     username = StringField('Username', validators=[DataRequired(), Length(3,80), Regexp('^[A-Za-z0-9_]{3,}$', message = 'Usernames consist of numbers, letters, and underscores.')])
@@ -26,5 +26,7 @@ class LoginForm(Form):
 
 class ProfileForm(Form):
     email = StringField('Email', validators=[DataRequired(), Length(1,120), Email()])
+    phone = StringField('Phone Number', validators=[Regexp('^[0-9]{10}$', message='Phone number must be 10 digits only.')])
+    delivery_method = SelectField('Delivery Method', coerce=int, choices=[(x.id, x.description) for x in Delivery.all()])
     password = PasswordField('Password', validators=[EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm Password')

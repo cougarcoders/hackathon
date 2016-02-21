@@ -4,34 +4,14 @@
 {% block head %}<script>require(['profile']);</script>{% endblock %}
 {% block content %}
 	<div data-role="page">
-		<div id="profile-menu" data-role="panel" data-display="overlay">
-			<ul data-role="listview">
-				<li data-role="list-divider" data-theme="b">Menu</li>
-				<li data-icon="delete">
-					<a href="#" data-rel="close">Close</a>
-				</li>
-				<li>
-					<a href="#">Test</a>
-				</li>
-				<li>
-					<a href="#">Test</a>
-				</li>
-				<li>
-					<a href="#">Test</a>
-				</li>
-			</ul>
-		</div>
 		<div id="settings" data-role="panel" data-display="overlay" data-position="right">
 			<ul data-role="listview">
 				<li data-role="list-divider" data-theme="b">Settings</li>
 				<li data-icon="delete">
 					<a href="#" data-rel="close">Close</a>
 				</li>
-				<li>
-					<a href="#">Test</a>
-				</li>
-				<li>
-					<a href="#">Test</a>
+				<li data-icon="home">
+					<a href="{{ url_for('main') }}" data-ajax="false">Divvy Home</a>
 				</li>
 				<li data-icon="power">
 					<a href="{{ url_for('logout') }}" data-ajax="false">Logout</a>
@@ -39,7 +19,7 @@
 			</ul>
 		</div>
 		<div data-role="header">
-			<a href="#profile-menu" data-iconpos="notext" data-icon="bars">Menu</a>
+			<a style="display: none;"></a>
 			<h1>divvy</h1>
 			<a href="#settings" data-iconpos="notext" data-icon="gear" data-position="right">Settings</a>
 		</div>
@@ -55,6 +35,8 @@
 			<form action="" method="POST">
 				{{ form.hidden_tag() }}
 				{{ render_field(form.email) }}
+				{{ render_field(form.phone) }}
+				{{ render_field(form.delivery_method) }}
 				{{ render_field(form.password) }}
 				{{ render_field(form.password2) }}
 				<p>
