@@ -49,7 +49,7 @@
         {{ header() }}
         <div data-role="content" class="ui-content">
             <h2>Your Buckets</h2>
-            <!-- ko foreach: $data -->
+            <div id="buckets" data-bind="foreach: $data">
                 <ul data-role="listview" data-inset="true" class="bucket">
                     <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
                     <li data-icon="gear">
@@ -58,23 +58,11 @@
                     <li data-role="list-divider">Contents</li>
                     <!-- ko foreach: sources -->
                         <li data-icon="minus">
-                            <a href="#" data-text="description">Loading</a>
+                            <a href="#" data-bind="text: description">Loading</a>
                         </li>
                     <!-- /ko -->
                 </ul>
-                <ul data-role="listview" data-inset="true" class="bucket">
-                    <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
-                    <li data-icon="gear">
-                        <a href="#">Settings</a>
-                    </li>
-                    <li data-role="list-divider">Contents</li>
-                    <!-- ko foreach: sources -->
-                        <li data-icon="minus">
-                            <a href="#" data-text="description">Loading</a>
-                        </li>
-                    <!-- /ko -->
-                </ul>
-            <!-- /ko -->
+            </div>
         </div>
         {{ footer() }}
     </div>

@@ -4,7 +4,6 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
         , buckets_url = $('#api-buckets').val()
     ;
 
-
     $('#content').bind('panelopen', function(){
         $('#content input[data-type="search"]').focus();
     });
@@ -15,6 +14,7 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
     }, 'json');
 
     $.get(buckets_url, null, function(data){
-        console.debug(data);
+        ko.applyBindings(data, $('#buckets')[0]);
+        $('#buckets').trigger('create');
     }, 'json');
 });
