@@ -1,9 +1,9 @@
 {# Login form for divvy #}
 {% extends "base.html" %}
 {% block title %}log in{% endblock %}
-{% block head %}<script>require(['login']);</script>{% endblock %}
 {% block content %}
-	<div data-role="page" id="login-page">
+	<div data-role="page">
+		<script>require(['login']);</script>
 		{{ header(buttons=False) }}
 		<div data-role="content" class="ui-content">
 			<h1>Log In</h1>

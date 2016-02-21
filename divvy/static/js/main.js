@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-mobile', 'knockout'], function($, $m, ko){
+define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m, ko){
 	var tags_url = $('#api-tags').val();
 
 	$('#content').bind('panelopen', function(){

@@ -1,9 +1,9 @@
 {# Signup form for divvy #}
 {% extends "base.html" %}
 {% block title %}sign up{% endblock %}
-{% block head %}<script>require(['signup']);</script>{% endblock %}
 {% block content %}
 	<div data-role="page">
+		<script>require(['signup']);</script>
 		{{ header(buttons=False) }}
 		<div data-role="content" class="ui-content">
 			<h1>Sign Up</h1>
