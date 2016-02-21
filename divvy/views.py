@@ -11,6 +11,8 @@ def load_user(userid):
 
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('main'))
     return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -26,13 +28,13 @@ def signup():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('app'))
+        return redirect(url_for('main'))
     form = LoginForm()
     if form.validate_on_submit():
         user=User.get_by_username(form.username.data)
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
-            return redirect(url_for('app'))
+            return redirect(url_for('main'))
         form.username.errors = ('Invalid credentials.',)
         # message for wrong password goes here
     return render_template('login.html', form=form)
@@ -42,7 +44,7 @@ def logout():
     logout_user()
     return render_template('logout.html')
 
-@app.route('/app', methods=['GET'])
+@app.route('/main', methods=['GET'])
 @login_required
-def app():
-    return render_template('app.html')
+def main():
+    return render_template('main.html')

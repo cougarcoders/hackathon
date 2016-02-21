@@ -1,19 +1,15 @@
 {# Menu panel for divvy #}
-<div id="menu" data-role="panel" data-display="overlay">
+<div id="content" data-role="panel" data-display="overlay">
 	<ul data-role="listview">
-		<li data-theme="b">
-			<strong>Menu</strong>
+		<li data-theme="b" data-role="divider">
+			<strong>Content</strong>
 		</li>
-		<li>
-			<a href="#">Test</a>
+		<li data-icon="delete">
+			<a href="#" data-rel="close">Close</a>
 		</li>
-		<li>
-			<a href="#">Test</a>
-		</li>
-		<li>
-			<a href="#">Test</a>
-		</li>
-		<li>
+	</ul>
+	<ul data-role="listview" data-filter="true">
+		<li data-icon="plus">
 			<a href="#">Test</a>
 		</li>
 	</ul>
