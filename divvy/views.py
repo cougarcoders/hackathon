@@ -79,7 +79,7 @@ def tags():
 @app.route('/buckets', methods=['GET'])
 @login_required
 def buckets():
-    return json.dumps(Bucket.all_dict())
+    return json.dumps(Bucket.for_user_as_dict(current_user.id))
 
 @app.route('/buckets/<int:id>', methods=['POST'])
 def buckets_update(id):
