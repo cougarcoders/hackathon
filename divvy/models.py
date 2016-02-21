@@ -81,6 +81,13 @@ class Tag(db.Model):
         for source in all_sources:
             result.append(source.source_id)
         return result
+        
+    def sources_object(self):
+        all_sources = Source_Tags.query.filter_by(tag_id=self.id)
+        result = []
+        for source in all_sources:
+            result.append(Source.query.get(source.source_id))
+        return result
     
     def __repr__(self):
         return self.description
