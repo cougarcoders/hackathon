@@ -33,6 +33,18 @@ class User(db.Model, UserMixin):
     def get_by_username(username):
         return User.query.filter_by(username=username).first()
     
+    # add buckets for new User
+    def add_bucket_new_user(self, num_bucket):
+        for i in range (1, num_bucket+1):
+            new_queue = Queue(last_empty = None)
+            db.session.add(new_queue)
+            db.session.flush()
+            new_bucket = Bucket(description = 'Bucket '+str(i) , owner = self.id, schedule = i, max_item = 10, queue = new_queue.id, delivery_method = 1)
+            db.session.add(new_bucket)
+            db.session.flush()
+        db.session.commit()
+        return 'Created {} buckets for user {}'.format(num_bucket, self) 
+    
     def __repr__(self):
         return '<User %r>' % self.username
         
