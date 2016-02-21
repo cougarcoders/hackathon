@@ -24,14 +24,14 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
     $('[data-role="panel"]')
         // when a panel is opened, remember the scroll position of the page
         .bind('panelopen', function(){
-            scrollpos = $(window).scrollTop(); 
+            scrollpos = $(window).scrollTop();
         })
         // when a panel is closed, restore the scroll position of the page
         .bind('panelclose', function(){
-            $(window).scrollTop(scrollpos); 
+            $(window).scrollTop(scrollpos);
         })
     ;
-    
+
     // when the 'content' panel is opened, focus on the search filter
     $('#content').bind('panelopen', function(){
         $('#content input[data-type="search"]').focus();
