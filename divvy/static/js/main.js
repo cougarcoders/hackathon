@@ -7,5 +7,6 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
 
 	$.get(tags_url, null, function(data){
 		ko.applyBindings(data, $('#content')[0]);
+        $('#content').trigger('create');
 	}, 'json');
 });
