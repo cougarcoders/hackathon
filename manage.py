@@ -64,8 +64,8 @@ def initdb():
     db.session.add(larry_bucket)
     db.session.add(todd_bucket)
     
-    content1 = Content(source=1, title=u"Even Einstein Didn’t Think Gravitational Waves Existed", body='The body of this content', url=u"http://feeds.wired.com/c/35185/f/661370/s/4db9ee31/sc/28/l/0L0Swired0N0C20A160C0A20Ceven0Eeinstein0Edidnt0Ethink0Egravitational0Ewaves0Eexisted0C/story01.htm", date_polled=None)
-    content2 = Content(source=2, title=u'Why Use a Paintbrush When You Can Make Mind-Bending Art With Code?', body='Body of this content, something real hairy', url=u"http://www.wired.com/2016/02/why-use-a-paintbrush-when-you-can-make-mind-bending-art-with-code/", date_polled=None)
+    content1 = Content(source=1, title=u"Even Einstein Didnt Think Gravitational Waves Existed", body='The body of this content', url="www.bit.ly/something", date_polled=None)
+    content2 = Content(source=2, title=u'Why Use a Paintbrush When You Can Make Mind-Bending Art With Code', body='Body of this content, something real hairy', url="www.bit.ly/something", date_polled=None)
     content3 = Content(source=3, title=u'Get up and do 10 squats', body=None, url=None, date_polled=None)
     db.session.add(content1)
     db.session.add(content2)
@@ -127,6 +127,6 @@ def dropdb():
         "Drop db and lose all your data"):
         db.drop_all()
     print 'Dropped the database'
-    
+
 if __name__ == '__main__':
     manager.run()
