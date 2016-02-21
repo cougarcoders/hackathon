@@ -40,7 +40,7 @@ class Delivery(db.Model):
     description = db.Column(db.String(200),nullable=False)
     
     def __repr__(self):
-        return self.description
+        return self.id
     
 class Bucket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +52,7 @@ class Bucket(db.Model):
     delivery_method = db.Column(db.Integer, db.ForeignKey('delivery.id'), nullable=False)
     
     def __repr__(self):
-        return self.description
+        return self.id
         
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,32 +65,32 @@ class Source(db.Model):
     last_polled = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
-        return self.description
+        return self.id
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
     
     def __repr__(self):
-        return self.description
+        return self.id
         
 class SourceType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), nullable=False)
     
     def __repr__(self):
-        return self.description
+        return self.id
         
 class Content(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), nullable=False)
     title = db.Column(db.String(200))
-    body = db.Column(db.Text, nullable=False)
+    body = db.Column(db.Text, nullable=True)
     url= db.Column(db.Text, nullable=True)
     date_polled = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
-        return self.header
+        return self.id
         
 class SourceType_Reminder(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
@@ -106,6 +106,14 @@ class SourceType_RSS(db.Model):
     format = db.Column(db.Integer, nullable=False)
     url = db.Column(db.Text, nullable=False)
 
-Bucket_Sources = db.Table('bucket_sources', db.Column('bucket.id', db.Integer, db.ForeignKey('bucket.id', ondelete='cascade')), db.Column('source_id', db.Integer, db.ForeignKey('source.id', ondelete='cascade')))
-Source_Tags = db.Table('source_tags', db.Column('source_id', db.Integer, db.ForeignKey('source.id', ondelete='cascade')), db.Column('tag_id', db.Integer, db.ForeignKey('tag.id', ondelete='cascade')))
-Queue_Content = db.Table('queue_contents', db.Column('queue_id', db.Integer, db.ForeignKey('user.id', ondelete='cascade')), db.Column('content_id', db.Integer, db.ForeignKey('content.id', ondelete='cascade')))
+class Bucket_Sources(db.Model):
+    bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id', ondelete='cascade'), primary_key=True)
+    source_id = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
+
+class Source_Tags(db.Model):
+    source_id = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tag.id', ondelete='cascade'), primary_key=True)
+    
+class Queue_Contents(db.Model):
+    queue_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='cascade'), primary_key=True)
+    content_id = db.Column(db.Integer, db.ForeignKey('content.id', ondelete='cascade'), primary_key=True)
