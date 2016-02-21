@@ -12,7 +12,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'di
 app.config['DEBUG'] = True
 app.secret_key = os.getenv('SECRET_KEY', 'changemeplease')
 db = SQLAlchemy(app)
-__all__ = ["db", "app"]
 
 #configure authentication
 login_manager = LoginManager()
