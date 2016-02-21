@@ -10,6 +10,7 @@ class SignupForm(Form):
     email = StringField('Email', validators=[DataRequired(), Length(1,120), Email()])
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+    submit = SubmitField('Sign Up')
     
     def validate_email(self, email_field):
         if User.query.filter_by(email=email_field.data).first():

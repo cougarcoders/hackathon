@@ -1,11 +1,13 @@
 {# Logout page for divvy #}
 {% extends "base.html" %}
 {% block title %}log out{% endblock %}
+{% block head %}<script>require(['naked']);</script>{% endblock %}
 {% block content %}
 	{{ header(buttons=False) }}
 	<div data-role="content" class="ui-content">
 		<h2>Log Out</h2>
 		<p>You have been logged out of the system.</p>
+		<meta http-equiv="refresh" content="7;url={{ url_for('index') }}"/>
 	</div>
 	{{ footer() }}
 {% endblock %}

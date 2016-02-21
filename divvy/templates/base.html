@@ -2,11 +2,11 @@
 {% macro header(title='divvy', buttons=True) -%}
 	<div data-role="header">
 		{% if buttons %}
-			<a href="#" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-left">Menu</a>
+			<a href="#menu" data-role="button" data-icon="bars" data-iconpos="notext" class="ui-btn-left">Menu</a>
 		{% endif %}
 		<h1>{{ title }}</h1>
 		{% if buttons %}
-			<a href="#" data-role="button" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Settings</a>
+			<a href="#settings" data-role="button" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Settings</a>
 		{% endif %}
 	</div>
 {%- endmacro %}
