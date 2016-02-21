@@ -98,7 +98,7 @@ class Bucket(db.Model):
             db.session.commit()
             return 'Source deleted'
         else:
-            return "Source is not in bucket'
+            return 'Source is not in bucket'
         
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
