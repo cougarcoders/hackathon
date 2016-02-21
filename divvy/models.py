@@ -79,6 +79,12 @@ class Bucket(db.Model):
             result.append(Source.query.get(source.source_id))
         return result
         
+class Schedule(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(100))
+    interval = db.Column(db.String(10), nullable=False)
+    frequency = db.Column(db.Integer, nullable=False)
+        
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_empty = db.Column(db.DateTime, default=datetime.utcnow)
