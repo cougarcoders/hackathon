@@ -25,6 +25,13 @@ div[data-role="content"] {
     margin: 0 auto;
 }
 
+.ui-header h1 {
+	background-image: url(../img/divvy.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	text-indent: -100%;
+	background-size: 74px;
+}
 
 /* desktop styles */
 
