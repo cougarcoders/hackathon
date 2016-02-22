@@ -211,6 +211,10 @@ class Queue(db.Model):
         for queue_bucket in Queue_Bucket_Result:
             queue_to_return.append(queue_bucket[0])
         return queue_to_return
+        
+    # get bucket object from queue
+    def get_bucket(self):
+        return Bucket.query.filter_by(queue = self.id).first()
 
 class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
