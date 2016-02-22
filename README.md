@@ -56,5 +56,6 @@ that we would hope to add:
 - More robust exception handling for a resilient system
 - Have the `runserver` Manager task invoke both the web application **and** the scheduling engine
 - A more pleasing user interface
+- Quiet hours for the delivery schedules (e.g., don't bother me while I'm sleeping!)
 
 That being said, we are proud of what we were able to accomplish, and had a blast doing it!
