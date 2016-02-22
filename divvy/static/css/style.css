@@ -20,9 +20,11 @@ div[data-role="panel"] form.ui-filterable {
     padding-top: 0.5em;
 }
 
-.ui-panel {
-    overflow-y: auto;
+div[data-role="content"] {
+    max-width: 960px;
+    margin: 0 auto;
 }
+
 
 /* desktop styles */
 
@@ -56,5 +58,9 @@ div[data-role="panel"] form.ui-filterable {
         padding: 0.25em;
         float: left;
         box-sizing: border-box;
+    }
+
+    .bucket:nth-child(even) {
+        float: right;
     }
 }

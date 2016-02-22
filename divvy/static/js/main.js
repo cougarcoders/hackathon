@@ -75,6 +75,7 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
             , 'configure_bucket_popup': function(){
                 var $sched = $('#bucket-schedule');
                 buckets.target_bucket(this);
+                // @HACK to update the dropdown selection UI
                 $sched.prev('span').text($sched.find('option:selected').text());
                 return true;
             }

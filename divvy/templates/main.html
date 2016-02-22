@@ -19,7 +19,7 @@
             <ul data-bind="foreach: $data" class="error">
                 <li data-bind="text: $data"></li>
             </ul>
-            <a href="#" data-role="button" data-rel="back" data-theme="b">OK</a>
+            <a href="#" data-role="button" data-rel="back" data-theme="c">OK</a>
         </div>
         <!-- popup: add source to bucket -->
         <div id="add-to-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
@@ -28,14 +28,14 @@
             <select data-bind="options: content, optionsText: 'description', value: $root.target_bucket">
                 <option>Loading</option>
             </select>
-            <a href="#" data-role="button" data-rel="back" data-theme="b" data-bind="click: add_to_bucket">Add</a>
+            <a href="#" data-role="button" data-rel="back" data-theme="c" data-bind="click: add_to_bucket">Add</a>
         </div>
         <!-- popup: remove source from bucket -->
         <div id="remove-from-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
             {{ close_button() }}
             <p>Are you sure you want to remove this content source from this bucket?</p>
-            <a href="#" data-role="button" data-rel="back" data-theme="b" data-bind="click: $root.remove_from_bucket">Yes</a>
-            <a href="#" data-role="button" data-rel="back">No</a>
+            <a href="#" data-role="button" data-rel="back" data-theme="c" data-bind="click: $root.remove_from_bucket">Yes</a>
+            <a href="#" data-role="button" data-rel="back" data-theme="b">No</a>
         </div>
         <!-- popup: bucket settings -->
         <div id="configure-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
@@ -53,12 +53,12 @@
                     <option value="4">Every day</option>
                 </select>
             </p>
-            <a href="#" data-role="button" data-theme="b" data-bind="click: $root.configure_bucket">Change</a>
+            <a href="#" data-role="button" data-theme="c" data-bind="click: $root.configure_bucket">Change</a>
         </div>
         <!-- panel: content -->
         <div id="content" data-role="panel" data-display="overlay" data-position-fixed="true">
             <ul data-role="listview">
-                <li data-theme="b" data-role="list-divider">
+                <li data-theme="c" data-role="list-divider">
                     <strong>Content</strong>
                 </li>
                 <li data-icon="delete">
@@ -81,7 +81,7 @@
         <!-- panel: menu -->
         <div id="settings" data-role="panel" data-display="overlay" data-position="right">
             <ul data-role="listview">
-                <li data-theme="b" data-role="list-divider">
+                <li data-theme="c" data-role="list-divider">
                     <strong>Settings</strong>
                 </li>
                 <li data-icon="delete">
