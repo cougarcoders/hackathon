@@ -12,6 +12,14 @@
     <div data-role="page">
         <!-- script for page -->
         <script>require(['main']);</script>
+        <!-- popup: errors -->
+        <div id="errors" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
+            {{ close_button() }}
+            <h3>Error:</h3>
+            <ul data-bind="foreach: $data" class="error">
+                <li data-bind="text: $data"></li>
+            </ul>
+        </div>
         <!-- popup: add source to bucket -->
         <div id="add-to-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
             {{ close_button() }}
@@ -33,7 +41,7 @@
             {{ close_button() }}
             <p>
                 <label for="bucket-description">Description</label>
-                <input type="text" name="bucket-description" id="bucket-description" data-bind="value: target_bucket.description" />
+                <input type="text" name="bucket-description" id="bucket-description" data-bind="value: target_bucket().description" />
             </p>
             <p>
                 <label for="bucket-schedule">Schedule</label>

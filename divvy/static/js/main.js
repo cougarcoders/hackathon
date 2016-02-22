@@ -18,26 +18,31 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
 
     // viewmodels and helper variables
     var
-        buckets = {
+        errors = ko.observableArray()
+        , buckets = {
             'content': null
             , 'remove_from_bucket_popup': function(source, bucket){
-                buckets.target_bucket = bucket;
-                buckets.target_source = source;
+                buckets.target_bucket(bucket);
+                buckets.target_source(source);
                 return true;
             }
             , 'remove_from_bucket': function(){
+                var
+                    bucket = buckets.target_bucket()
+                    , source = buckets.target_source()
+                ;
+
                 $.ajax({
-                    url: buckets_url + '/' + buckets.target_bucket.id + '/' + buckets.target_source.id
+                    url: buckets_url + '/' + bucket.id + '/' + source.id
                     , type: 'DELETE'
                     , dataType: 'json'
                     , success: function(data){
                         if(data.hasOwnProperty('errors')) {
-                            data.errors.forEach(function(val, idx, arr){
-                                console.log(val);
-                            });
+                            errors(data.errors);
+                            $('#errors').popup('open');
                         }
                         else {
-                            buckets.target_bucket.sources.splice(buckets.target_bucket.sources.indexOf(buckets.target_source), 1);
+                            bucket.sources.splice(bucket.sources.indexOf(source), 1);
                         }
                     }
                 });
@@ -45,18 +50,22 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                 return true;
             }
             , 'add_to_bucket': function(){
+                var
+                    bucket = buckets.target_bucket()
+                    , source = buckets.target_source()
+                ;
+
                 $.ajax({
-                    url: buckets_url + '/' + buckets.target_bucket.id + '/' + buckets.target_source.id
+                    url: buckets_url + '/' + bucket.id + '/' + source.id
                     , type: 'PUT'
                     , dataType: 'json'
                     , success: function(data){
                         if(data.hasOwnProperty('errors')) {
-                            data.errors.forEach(function(val, idx, arr){
-                                console.log(val);
-                            });
+                            errors(data.errors);
+                            $('#errors').popup('open');
                         }
                         else {
-                            buckets.target_bucket.sources.push(buckets.target_source);
+                            bucket.sources.push(source);
                         }
                     }
                 });
@@ -64,23 +73,24 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                 return true;
             }
             , 'configure_bucket_popup': function(){
-                buckets.target_bucket = this;
+                buckets.target_bucket(this);
                 return true;
             }
             , 'configure_bucket': function(){
+                var bucket = this.target_bucket();
+
                 $.ajax({
-                    url: buckets_url + '/' + this.target_bucket.id
+                    url: buckets_url + '/' + bucket.id
                     , type: 'POST'
                     , dataType: 'json'
                     , data: {
-                        'description': this.target_bucket.description()
-                        , 'schedule': this.target_bucket.schedule()
+                        'description': bucket.description()
+                        , 'schedule': bucket.schedule()
                     }
                     , success: function(data){
                         if(data.hasOwnProperty('errors')) {
-                            data.errors.forEach(function(val, idx, arr){
-                                console.log(val);
-                            });
+                            errors(data.errors);
+                            $('#errors').popup('open');
                         }
                         else {
                             $('#configure-bucket').popup('close');
@@ -90,13 +100,13 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
 
                 return true;
             }
-            , 'target_bucket': null
-            , 'target_source': null
+            , 'target_bucket': ko.observable()
+            , 'target_source': ko.observable()
         }
         , tags = {
             'content': null
             , 'add_to_bucket_popup': function(source){
-                buckets.target_source = source;
+                buckets.target_source(source);
                 return true;
             }
         }
@@ -147,6 +157,7 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
             })
         ;
 
+        ko.applyBindings(errors, $('#errors')[0]);
         $('#buckets').trigger('create');
     }, 'json');
 });
