@@ -46,7 +46,7 @@ def initdb():
     source12 = Source(description='FeedBurner.com', type=3)
     source13 = Source(description='Joke 1', type=2)
     source14 = Source(description='Joke 2', type=2)
-    source15 = Source(description='Random Wiki Article', type=3)
+    #source15 = Source(description='Random Wiki Article', type=3)
     db.session.add(source1)
     db.session.add(source2)
     db.session.add(source3)
@@ -61,7 +61,7 @@ def initdb():
     db.session.add(source12)
     db.session.add(source13)
     db.session.add(source14)
-    db.session.add(source15)
+    #db.session.add(source15)
     
     RSS_source1 = SourceType_RSS(source=1, format=1, url="http://feeds.wired.com/wired/index")
     RSS_source2 = SourceType_RSS(source=2, format=1, url="http://www.engadget.com/rss.xml")
@@ -182,8 +182,8 @@ def initdb():
     db.session.add(source_tags)
     source_tags = Source_Tags(source_id = 12, tag_id = 8)
     db.session.add(source_tags)
-    source_tags = Source_Tags(source_id = 15, tag_id = 8)
-    db.session.add(source_tags)
+    #source_tags = Source_Tags(source_id = 15, tag_id = 8)
+    #db.session.add(source_tags)
     
     queue_contents = Queue_Contents(queue_id = 1, content_id = 1, bucket_id = 1)
     db.session.add(queue_contents)
