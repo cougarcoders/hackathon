@@ -16,10 +16,10 @@ def sequence(schedule):
 	print("sending data to users")
 	build_queues.divvy_queue(schedule)
 
-schedule.every(1).minutes.do(lambda: sequence(1))
-schedule.every(2).minutes.do(lambda: sequence(2))
-schedule.every(3).minutes.do(lambda: sequence(3))
-schedule.every(4).minutes.do(lambda: sequence(4))
+schedule.every(15).minutes.do(lambda: sequence(1))
+schedule.every(30).minutes.do(lambda: sequence(2))
+schedule.every(1).hours.do(lambda: sequence(3))
+schedule.every(1).days.do(lambda: sequence(4))
 
 while True:
 	schedule.run_pending()
