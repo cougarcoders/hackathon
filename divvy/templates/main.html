@@ -28,6 +28,24 @@
             <a href="#" data-role="button" data-rel="back" data-theme="b" data-bind="click: $root.remove_from_bucket">Yes</a>
             <a href="#" data-role="button" data-rel="back">No</a>
         </div>
+        <!-- popup: bucket settings -->
+        <div id="configure-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
+            {{ close_button() }}
+            <p>
+                <label for="bucket-description">Description</label>
+                <input type="text" name="bucket-description" id="bucket-description" data-bind="value: target_bucket.description" />
+            </p>
+            <p>
+                <label for="bucket-schedule">Schedule</label>
+                <select name="bucket-schedule" id="bucket-schedule" data-bind="value: target_bucket.schedule">
+                    <option value="1">Every 15 minutes</option>
+                    <option value="2">Every 30 minutes</option>
+                    <option value="3">Every hour</option>
+                    <option value="4">Every day</option>
+                </select>
+            </p>
+            <a href="#" data-role="button" data-theme="b" data-bind="click: $root.configure_bucket">Change</a>
+        </div>
         <!-- panel: content -->
         <div id="content" data-role="panel" data-display="overlay" data-position-fixed="true">
             <ul data-role="listview">
@@ -74,11 +92,9 @@
             <h2>Buckets: {{ current_user.username }}</h2>
             <div id="buckets" data-bind="foreach: content">
                 <ul data-role="listview" data-inset="true" class="bucket">
-                    <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
-                    <li data-icon="gear">
-                        <a href="#">Settings</a>
+                    <li data-theme="b" data-icon="gear">
+                        <a href="#configure-bucket" data-rel="popup" data-bind="text: description, click: $root.configure_bucket_popup">Loading</a>
                     </li>
-                    <li data-role="list-divider">Contents</li>
                     <!-- ko foreach: sources() -->
                         <li data-icon="minus">
                             <a href="#remove-from-bucket" data-rel="popup" data-bind="text: description, click: function(){ return $root.remove_from_bucket_popup(this, $parent); }">Loading</a>

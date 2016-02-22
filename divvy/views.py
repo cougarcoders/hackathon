@@ -66,7 +66,7 @@ def profile():
         messages = ('Your profile has been updated.',)
     return render_template('profile.html', form=form, messages=messages)
 
-@app.route('/main', methods=['GET'])
+@app.route('/main', methods=['GET', 'POST'])
 @login_required
 def main():
     return render_template('main.html')
@@ -80,6 +80,22 @@ def tags():
 @login_required
 def buckets():
     return json.dumps(Bucket.for_user_as_dict(current_user.id))
+
+@app.route('/buckets/<int:bucket_id>', methods=['POST'])
+@login_required
+def buckets_post(bucket_id):
+    bucket = Bucket.query.filter_by(id=bucket_id).first()
+
+    if not bucket:
+        return json.dumps({'errors': ('No such bucket',)})
+
+    for field in ('description', 'schedule',):
+        setattr(bucket, field, request.form[field])
+
+    db.session.commit()
+
+    return json.dumps({})
+
 
 @app.route('/buckets/<int:bucket_id>/<int:source_id>', methods=['PUT'])
 @login_required

@@ -33,13 +33,12 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                     , success: function(data){
                         if(data.hasOwnProperty('errors')) {
                             data.errors.forEach(function(val, idx, arr){
-                                alert(val);
+                                console.log(val);
                             });
-
-							return;
                         }
-
-                        buckets.target_bucket.sources.splice(buckets.target_bucket.sources.indexOf(buckets.target_source), 1);
+                        else {
+                            buckets.target_bucket.sources.splice(buckets.target_bucket.sources.indexOf(buckets.target_source), 1);
+                        }
                     }
                 });
 
@@ -53,13 +52,39 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                     , success: function(data){
                         if(data.hasOwnProperty('errors')) {
                             data.errors.forEach(function(val, idx, arr){
-                                alert(val);
+                                console.log(val);
                             });
-
-							return;
                         }
+                        else {
+                            buckets.target_bucket.sources.push(buckets.target_source);
+                        }
+                    }
+                });
 
-                        buckets.target_bucket.sources.push(buckets.target_source);
+                return true;
+            }
+            , 'configure_bucket_popup': function(){
+                buckets.target_bucket = this;
+                return true;
+            }
+            , 'configure_bucket': function(){
+                $.ajax({
+                    url: buckets_url + '/' + this.target_bucket.id
+                    , type: 'POST'
+                    , dataType: 'json'
+                    , data: {
+                        'description': this.target_bucket.description()
+                        , 'schedule': this.target_bucket.schedule()
+                    }
+                    , success: function(data){
+                        if(data.hasOwnProperty('errors')) {
+                            data.errors.forEach(function(val, idx, arr){
+                                console.log(val);
+                            });
+                        }
+                        else {
+                            $('#configure-bucket').popup('close');
+                        }
                     }
                 });
 
@@ -116,7 +141,7 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
 
         buckets.content = ko.observableArray(new_buckets);
 
-        ['#add-to-bucket', '#buckets', '#remove-from-bucket']
+        ['#add-to-bucket', '#buckets', '#remove-from-bucket', '#configure-bucket']
             .forEach(function(val, idx, arr){
                 ko.applyBindings(buckets, $(val)[0]);
             })

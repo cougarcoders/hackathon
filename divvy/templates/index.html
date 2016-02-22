@@ -15,8 +15,8 @@
                 <li>Receive a random Wikipedia entry every day</li>
                 <li>Laugh at a new joke every week</li>
             </ul>
-            <a data-role="button" href="{{ url_for('login') }}" data-theme="b">Log In</a>
-            <a data-role="button" href="{{ url_for('signup') }}">Sign Up</a>
+            <a data-role="button" href="{{ url_for('login') }}" data-theme="b" data-ajax="false">Log In</a>
+            <a data-role="button" href="{{ url_for('signup') }}" data-ajax="false">Sign Up</a>
         </div>
         {{ footer() }}
     </div>
