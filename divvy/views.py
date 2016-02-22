@@ -20,7 +20,7 @@ def index():
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data, username=form.username.data, password=form.password.data, delivery_method="1")
+        user = User(email=form.email.data, username=form.username.data, password=form.password.data, delivery_method=1)
         db.session.add(user)
         db.session.commit()
         user.add_bucket_new_user(4) # add 4 buckets to new user
