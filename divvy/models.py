@@ -86,7 +86,7 @@ class Bucket(db.Model):
         for source in all_sources:
             result.append(Source.query.get(source.source_id))
         return result
-        
+
     def sources_object(self):
         return [source.as_dict() for source in self.sources()]
 
@@ -96,27 +96,27 @@ class Bucket(db.Model):
                 'schedule': self.schedule,
                 'sources': self.sources_object()}
 
-    # add source to bucket    
+    # add source to bucket
     def add_source(self, source_id):
-        check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id)
+        check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id).first()
         if check_bucket_source is None:
             new_bucket_source = Bucket_Sources(bucket_id = self.id, source_id = source_id)
             db.session.add(new_bucket_source)
             db.session.commit()
-            return 'Source added to bucket'
+            return True
         else:
-            return 'Source is already in bucket'
-            
-    # remove source fro bucket        
+            return False
+
+    # remove source fro bucket
     def remove_source(self, source_id):
-        check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id)
+        check_bucket_source = Bucket_Sources.query.filter_by(bucket_id = self.id, source_id = source_id).first()
         if check_bucket_source is not None:
             db.session.delete(check_bucket_source)
             db.session.commit()
-            return 'Source deleted'
+            return True
         else:
-            return 'Source is not in bucket'
-        
+            return False
+
     # flush this bucket's queue contents
     def flush_queue(self):
         contents_to_delete = Queue_Contents.query.filter_by(queue_id = self.queue, bucket_id = self.id)
@@ -124,13 +124,13 @@ class Bucket(db.Model):
             db.session.delete(queue_content)
         db.session.commit()
         return 'Bucket queue flushed'
-        
+
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(100))
     interval = db.Column(db.String(10), nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
-        
+
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_empty = db.Column(db.DateTime, default=None)

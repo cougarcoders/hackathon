@@ -12,7 +12,23 @@
     <div data-role="page">
         <!-- script for page -->
         <script>require(['main']);</script>
-        <!-- tags/sources panel -->
+        <!-- popup: add source to bucket -->
+        <div id="add-to-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
+            {{ close_button() }}
+            <p>Which bucket would you like to add this source to?</p>
+            <select data-bind="options: content, optionsText: 'description', value: $root.target_bucket">
+                <option>Loading</option>
+            </select>
+            <a href="#" data-role="button" data-rel="back" data-theme="b" data-bind="click: add_to_bucket">Add</a>
+        </div>
+        <!-- popup: remove source from bucket -->
+        <div id="remove-from-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
+            {{ close_button() }}
+            <p>Are you sure you want to remove this conent source from this bucket?</p>
+            <a href="#" data-role="button" data-rel="back" data-theme="b" data-bind="click: $root.remove_from_bucket">Yes</a>
+            <a href="#" data-role="button" data-rel="back">No</a>
+        </div>
+        <!-- panel: content -->
         <div id="content" data-role="panel" data-display="overlay" data-position-fixed="true">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
@@ -23,19 +39,19 @@
                 </li>
             </ul>
             <div data-role="collapsible-set" data-inset="false">
-                <div data-role="listview" data-filter="true" data-bind="foreach: $data">
+                <div data-role="listview" data-filter="true" data-bind="foreach: content">
                     <div data-role="collapsible">
                         <h1 data-bind="text: description"></h1>
                         <ul data-role="listview" data-theme="b" data-bind="foreach: sources">
                             <li>
-                                <a href="#add-to-bucket" data-rel="popup" data-bind="text: description"></a>
+                                <a href="#add-to-bucket" data-rel="popup" data-bind="text: description, click: $root.add_to_bucket_popup"></a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- menu -->
+        <!-- panel: menu -->
         <div id="settings" data-role="panel" data-display="overlay" data-position="right">
             <ul data-role="listview">
                 <li data-theme="b" data-role="list-divider">
@@ -56,7 +72,7 @@
         <!-- page content -->
         <div data-role="content" class="ui-content">
             <h2>Buckets: {{ current_user.username }}</h2>
-            <div id="buckets" data-bind="foreach: $data">
+            <div id="buckets" data-bind="foreach: content">
                 <ul data-role="listview" data-inset="true" class="bucket">
                     <li data-role="list-divider" data-theme="b" data-bind="text: description">Loading</li>
                     <li data-icon="gear">
@@ -65,22 +81,11 @@
                     <li data-role="list-divider">Contents</li>
                     <!-- ko foreach: sources() -->
                         <li data-icon="minus">
-                            <a href="#" data-bind="text: description">Loading</a>
+                            <a href="#remove-from-bucket" data-rel="popup" data-bind="text: description, click: function(){ return $root.remove_from_bucket_popup(this, $parent); }">Loading</a>
                         </li>
                     <!-- /ko -->
                 </ul>
             </div>
-        <!-- popups -->
-        <div id="add-to-bucket" data-role="popup" class="ui-content" style="max-width:280px" data-dismissible="false">
-            {{ close_button() }}
-            <p>Which bucket would you like to add this source to?</p>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
-        </div>
         </div>
         {{ footer() }}
     </div>
