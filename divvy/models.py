@@ -200,6 +200,17 @@ class Queue(db.Model):
             db.session.delete(queue_content)
         db.session.commit()
         return "Clear queue for bucket {}".format(bucket_id)
+        
+    @staticmethod
+    def get_queue_from_bucket(bucket_schedule):
+        query = db.session.query(Queue, Bucket)\
+            .filter(Queue.id == Bucket.queue)\
+            .filter(Bucket.schedule == bucket_schedule)
+        Queue_Bucket_Result = query.all()
+        queue_to_return = []
+        for queue_bucket in Queue_Bucket_Result:
+            queue_to_return.append(queue_bucket[0])
+        return queue_to_return
 
 class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
