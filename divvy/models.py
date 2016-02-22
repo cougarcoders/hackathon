@@ -188,7 +188,7 @@ class Queue(db.Model):
     # get back contents for a bucket
     def get_bucket_contents(self, bucket_id):
         queue_content_bucket = Queue_Contents.query.filter_by(queue_id = self.id, bucket_id = bucket_id)
-        restul = []
+        result = []
         for queue_content in queue_content_bucket:
             result.append(Content.query.get(queue_content.content_id))
         return result
@@ -272,6 +272,9 @@ class Content(db.Model):
     body = db.Column(db.Text, nullable=True)
     url= db.Column(db.Text, nullable=True)
     date_polled = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def type(self):
+        return Source.query.get(self.source).type
 
     def __repr__(self):
         return self.title
