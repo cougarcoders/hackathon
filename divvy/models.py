@@ -133,7 +133,7 @@ class Schedule(db.Model):
         
 class Queue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    last_empty = db.Column(db.DateTime, default=datetime.utcnow)
+    last_empty = db.Column(db.DateTime, default=None)
 
     # return all contents that are currently in this queue
     def contents(self):
@@ -189,7 +189,7 @@ class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
     type = db.Column(db.Integer, nullable=False)
-    last_polled = db.Column(db.DateTime, default=datetime.utcnow)
+    last_polled = db.Column(db.DateTime, default=None)
 
     # get all exiting contents for this source
     def contents(self):
@@ -273,7 +273,7 @@ class SourceType_RSS(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('source.id', ondelete='cascade'), primary_key=True)
     format = db.Column(db.Integer, nullable=False)
     url = db.Column(db.Text, nullable=False)
-    last_pubdate = db.Column(db.DateTime, default=datetime.utcnow)
+    last_pubdate = db.Column(db.DateTime, default=None)
 
 class Bucket_Sources(db.Model):
     bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id', ondelete='cascade'), primary_key=True)

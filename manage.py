@@ -35,7 +35,7 @@ def initdb():
     source1 = Source(description='Wired.com', type=3)
     source2 = Source(description='Engadget.com', type=3)
     source3 = Source(description='Stand up', type=2)
-    source4 = Source(description='Keep it up', type=2)
+    source4 = Source(description='Motivate', type=2)
     source5 = Source(description='Food and Wine', type=3)
     source6 = Source(description='Health.com', type=3)
     source7 = Source(description='Womens Health and Fitness', type=3)
