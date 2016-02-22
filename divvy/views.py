@@ -96,7 +96,6 @@ def buckets_post(bucket_id):
 
     return json.dumps({})
 
-
 @app.route('/buckets/<int:bucket_id>/<int:source_id>', methods=['PUT'])
 @login_required
 def buckets_put(bucket_id, source_id):
