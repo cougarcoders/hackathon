@@ -81,6 +81,28 @@ def tags():
 def buckets():
     return json.dumps(Bucket.for_user_as_dict(current_user.id))
 
-@app.route('/buckets/<int:id>', methods=['POST'])
-def buckets_update(id):
-    pass
+@app.route('/buckets/<int:bucket_id>/<int:source_id>', methods=['PUT'])
+@login_required
+def buckets_put(bucket_id, source_id):
+    bucket = Bucket.query.filter_by(id=bucket_id).first()
+
+    if not bucket:
+        return json.dumps({'errors': ('No such bucket',)})
+
+    if not bucket.add_source(source_id):
+        return json.dumps({'errors': ('Source is already present',)})
+
+    return json.dumps({})
+
+@app.route('/buckets/<int:bucket_id>/<int:source_id>', methods=['DELETE'])
+@login_required
+def buckets_delete(bucket_id, source_id):
+    bucket = Bucket.query.filter_by(id=bucket_id).first()
+
+    if not bucket:
+        return json.dumps({'errors': ('No such bucket',)})
+
+    if not bucket.remove_source(source_id):
+        return json.dumps({'errors': ('Source is not present',)})
+
+    return json.dumps({})

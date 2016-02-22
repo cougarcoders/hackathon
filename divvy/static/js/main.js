@@ -16,8 +16,63 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
         };
     };
 
+    // viewmodels and helper variables
     var
-        buckets
+        buckets = {
+            'content': null
+            , 'remove_from_bucket_popup': function(source, bucket){
+                buckets.target_bucket = bucket;
+                buckets.target_source = source;
+                return true;
+            }
+            , 'remove_from_bucket': function(){
+                $.ajax({
+                    url: buckets_url + '/' + buckets.target_bucket.id + '/' + buckets.target_source.id
+                    , type: 'DELETE'
+                    , dataType: 'json'
+                    , success: function(data){
+                        if(data.hasOwnProperty('errors')) {
+                            data.errors.forEach(function(val, idx, arr){
+                                alert(val);
+                                return;
+                            });
+                        }
+
+                        buckets.target_bucket.sources.splice(buckets.target_bucket.sources.indexOf(buckets.target_source), 1);
+                    }
+                });
+
+                return true;
+            }
+            , 'add_to_bucket': function(){
+                $.ajax({
+                    url: buckets_url + '/' + buckets.target_bucket.id + '/' + buckets.target_source.id
+                    , type: 'PUT'
+                    , dataType: 'json'
+                    , success: function(data){
+                        if(data.hasOwnProperty('errors')) {
+                            data.errors.forEach(function(val, idx, arr){
+                                alert(val);
+                                return;
+                            });
+                        }
+
+                        buckets.target_bucket.sources.push(buckets.target_source);
+                    }
+                });
+
+                return true;
+            }
+            , 'target_bucket': null
+            , 'target_source': null
+        }
+        , tags = {
+            'content': null
+            , 'add_to_bucket_popup': function(source){
+                buckets.target_source = source;
+                return true;
+            }
+        }
         , scrollpos
     ;
 
@@ -39,7 +94,8 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
 
     // pull tags and their sources
     $.get(tags_url, null, function(data){
-        ko.applyBindings(data, $('#content')[0]);
+        tags.content = ko.observableArray(data);
+        ko.applyBindings(tags, $('#content')[0]);
         $('#content').trigger('create');
     }, 'json');
 
@@ -56,9 +112,14 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
             new_buckets.push(bucket);
         }
 
-        buckets = ko.observableArray(new_buckets);
+        buckets.content = ko.observableArray(new_buckets);
 
-        ko.applyBindings(buckets, $('#buckets')[0]);
+        ['#add-to-bucket', '#buckets', '#remove-from-bucket']
+            .forEach(function(val, idx, arr){
+                ko.applyBindings(buckets, $(val)[0]);
+            })
+        ;
+
         $('#buckets').trigger('create');
     }, 'json');
 });

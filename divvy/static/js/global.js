@@ -8,7 +8,7 @@ define(['jquery', 'jquery-mobile'], function($, $m){
         clearTimeout(t);
         t = setTimeout(function(){
             // fit the panels to the page height
-            $('.ui-panel').height($('.ui-page').height());
+            $('.ui-panel').height($('.ui-page').height() - 1);
         }, 10);
     });
 
