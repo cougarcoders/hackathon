@@ -1,2 +1,1 @@
-http://feeds.wired.com/wired/index
-http://www.wired.com/category/design/feed/
+http://feeds.feedburner.com/RandomFactsBlog?format=xml

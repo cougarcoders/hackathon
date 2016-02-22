@@ -1,3 +1,5 @@
+# -​*- coding: utf-8 -*​-
+
 # Larry Wells
 # 02/20/2016
 
@@ -46,8 +48,8 @@ def buildContentObjects(sources_list):
         for rssFeed in feedData.entries:
             #Check for null entries
             if len(rssFeed['title']) > 0:
-                rssContentObjectDict[indexer] = RSSContent(rssFeed['title'].encode("utf_8"),\
-                    rssFeed['description'].encode("utf_8"),\
+                rssContentObjectDict[indexer] = RSSContent(string_sanitizer(rssFeed['title']),\
+                    string_sanitizer(rssFeed['description']),\
                     rssFeed['link'].encode("utf_8"),\
                     format_date_to_utc(rssFeed['published_parsed']))
                 indexer += 1
@@ -65,12 +67,15 @@ def insert_feeds_into_database():
     for key,value in feeds_dict.items():
         print("nothing here yet")
         
-
+# String sanitization
+def string_sanitizer(string):
+    temp = re.sub(u"(\u2018|\u2019|\u2013)", "", string)
+    temp = re.sub(u'[^a-zA-Z0-9 ],.-','',temp)
+    return re.sub('<[^>]*>','',temp)
 
 # DEBUG Tools
 def debugPrintContentObjects():
-    print(len(buildContentObjects()))
-    for key,value in buildContentObjects().items():
+    for key,value in buildContentObjects(["http://feeds.wired.com/wired/index"]).items():
         print("***********************************")
         print("              NEW FEED             ")
         print("***********************************")
@@ -80,4 +85,5 @@ def debugPrintContentObjects():
         print("Date: " + str(value.date))
         print("\n\n")
 
+#debugPrintContentObjects()
 
