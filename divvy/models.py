@@ -149,7 +149,7 @@ class Queue(db.Model):
         for content in all_contents:
             db.session.delete(content)
         db.session.commit()
-        self.last_empty=datetime.utcnow
+        self.last_empty=datetime.utcnow()
         return "Queue {} flushed".format(self.id)
 
     # add content to queue, skip if content is already in the queue
