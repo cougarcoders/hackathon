@@ -34,8 +34,9 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                         if(data.hasOwnProperty('errors')) {
                             data.errors.forEach(function(val, idx, arr){
                                 alert(val);
-                                return;
                             });
+
+							return;
                         }
 
                         buckets.target_bucket.sources.splice(buckets.target_bucket.sources.indexOf(buckets.target_source), 1);
@@ -53,8 +54,9 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                         if(data.hasOwnProperty('errors')) {
                             data.errors.forEach(function(val, idx, arr){
                                 alert(val);
-                                return;
                             });
+
+							return;
                         }
 
                         buckets.target_bucket.sources.push(buckets.target_source);
