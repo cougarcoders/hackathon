@@ -185,6 +185,22 @@ class Queue(db.Model):
         db.session.commit()
         return "Queue {} pruned for bucket {}".format(self.id, bucket_id)
 
+    # get back contents for a bucket
+    def get_bucket_contents(self, bucket_id):
+        queue_content_bucket = Queue_Contents.query.filter_by(queue_id = self.id, bucket_id = bucket_id)
+        restul = []
+        for queue_content in queue_content_bucket:
+            result.append(Content.query.get(queue_content.content_id))
+        return result
+        
+    # clear queue contents for a bucket
+    def clear_bucket_queue_content(self, bucket_id):
+        queue_content_bucket = Queue_Contents.query.filter_by(queue_id = self.id, bucket_id = bucket_id)
+        for queue_content in queue_content_bucket:
+            db.session.delete(queue_content)
+        db.session.commit()
+        return "Clear queue for bucket {}".format(bucket_id)
+
 class Source(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
