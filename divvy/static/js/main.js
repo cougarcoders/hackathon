@@ -73,11 +73,16 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                 return true;
             }
             , 'configure_bucket_popup': function(){
+                var $sched = $('#bucket-schedule');
                 buckets.target_bucket(this);
+                $sched.prev('span').text($sched.find('option:selected').text());
                 return true;
             }
             , 'configure_bucket': function(){
-                var bucket = this.target_bucket();
+                var
+                    bucket = this.target_bucket()
+                    , sched = $('#bucket-schedule').val()
+                ;
 
                 $.ajax({
                     url: buckets_url + '/' + bucket.id
@@ -85,7 +90,7 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                     , dataType: 'json'
                     , data: {
                         'description': bucket.description()
-                        , 'schedule': bucket.schedule()
+                        , 'schedule': sched
                     }
                     , success: function(data){
                         if(data.hasOwnProperty('errors')) {
@@ -93,6 +98,7 @@ define(['global', 'jquery', 'jquery-mobile', 'knockout'], function(global, $, $m
                             $('#errors').popup('open');
                         }
                         else {
+                            bucket.schedule(sched);
                             $('#configure-bucket').popup('close');
                         }
                     }

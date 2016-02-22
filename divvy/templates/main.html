@@ -32,7 +32,7 @@
         <!-- popup: remove source from bucket -->
         <div id="remove-from-bucket" data-role="popup" class="ui-content" style="max-width: 280px" data-dismissible="false">
             {{ close_button() }}
-            <p>Are you sure you want to remove this conent source from this bucket?</p>
+            <p>Are you sure you want to remove this content source from this bucket?</p>
             <a href="#" data-role="button" data-rel="back" data-theme="b" data-bind="click: $root.remove_from_bucket">Yes</a>
             <a href="#" data-role="button" data-rel="back">No</a>
         </div>
@@ -45,7 +45,7 @@
             </p>
             <p>
                 <label for="bucket-schedule">Schedule</label>
-                <select name="bucket-schedule" id="bucket-schedule" data-bind="value: target_bucket.schedule">
+                <select name="bucket-schedule" id="bucket-schedule" data-bind="value: target_bucket().schedule()">
                     <option value="1">Every 15 minutes</option>
                     <option value="2">Every 30 minutes</option>
                     <option value="3">Every hour</option>
